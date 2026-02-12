@@ -1,0 +1,137 @@
+<?php
+// Heading
+$_['heading_title']                    = 'Mağazalar';
+
+// Text
+$_['text_settings']                    = 'Parametrlər';
+$_['text_success']                     = 'Uğur: Dükanları dəyişdirmisiniz!';
+$_['text_list']                        = 'Mağaza siyahısı';
+$_['text_add']                         = 'Mağaza əlavə edin';
+$_['text_edit']                        = 'Dükanı redaktə edin';
+$_['text_site']                        = 'Sayt təfərrüatları';
+$_['text_meta']                        = 'Meta Teqlər';
+$_['text_items']                       = 'Əşyalar';
+$_['text_shipping']                    = 'Çatdırılma Ünvanı';
+$_['text_payment']                     = 'Ödəniş ünvanı';
+$_['text_product']                     = 'Məhsullar';
+$_['text_legal']                       = 'Hüquqi';
+$_['text_tax']                         = 'Vergilər';
+$_['text_account']                     = 'Hesab';
+$_['text_checkout']                    = 'Yoxlama';
+$_['text_stock']                       = 'Səhm';
+$_['text_image']                       = 'Şəkil Ölçüləri';
+$_['text_region']                      = 'Region';
+$_['text_language']                    = 'Dil';
+$_['text_currency']                    = 'Valyuta';
+
+// Column
+$_['column_name']                      = 'Mağaza Adı';
+$_['column_url']                       = 'Mağaza URL';
+$_['column_action']                    = 'Fəaliyyət';
+
+// Entry
+$_['entry_url']                        = 'Mağaza URL';
+$_['entry_meta_title']                 = 'Meta Başlıq';
+$_['entry_meta_description']           = 'Meta Teq Təsviri';
+$_['entry_meta_keyword']               = 'Meta Tag Açar Sözlər';
+$_['entry_layout']                     = 'Defolt Layout';
+$_['entry_theme']                      = 'Mövzu';
+$_['entry_name']                       = 'Mağaza Adı';
+$_['entry_owner']                      = 'Mağaza Sahibi';
+$_['entry_address']                    = 'Ünvan';
+$_['entry_geocode']                    = 'Coğrafi kod';
+$_['entry_email']                      = 'E-poçt';
+$_['entry_telephone']                  = 'Telefon';
+$_['entry_image']                      = 'Şəkil';
+$_['entry_open']                       = 'Açılış vaxtları';
+$_['entry_comment']                    = 'Şərh';
+$_['entry_location']                   = 'Mağaza Yeri';
+$_['entry_country']                    = 'ölkə';
+$_['entry_zone']                       = 'Region / Dövlət';
+$_['entry_language']                   = 'Dil';
+$_['entry_currency']                   = 'Valyuta';
+$_['entry_product_description_length'] = 'Siyahı Təsvir Limit';
+$_['entry_pagination']                 = 'Səhifə Başına Defolt Elementlər';
+$_['entry_product_count']              = 'Kateqoriya məhsul sayı';
+$_['entry_cookie']                     = 'Kuki Siyasəti';
+$_['entry_gdpr']                       = 'GDPR Siyasəti';
+$_['entry_tax']                        = 'Qiymətləri Vergi ilə göstərin';
+$_['entry_tax_default']                = 'Mağaza Vergi Ünvanını istifadə edin';
+$_['entry_tax_customer']               = 'Müştəri Vergi Ünvanını istifadə edin';
+$_['entry_customer_group']             = 'Müştəri Qrupu';
+$_['entry_customer_group_display']     = 'Müştəri Qrupları';
+$_['entry_customer_price']             = 'Giriş Qiymətlərini göstərin';
+$_['entry_account']                    = 'Hesab şərtləri';
+$_['entry_cart_weight']                = 'Səbət səhifəsində çəki göstərin';
+$_['entry_checkout_guest']             = 'Qonaq yoxlanışı';
+$_['entry_checkout']                   = 'Yoxlama Şərtləri';
+$_['entry_stock_display']              = 'Səhmləri göstərin';
+$_['entry_stock_checkout']             = 'Stok yoxlanışı';
+$_['entry_logo']                       = 'Mağaza Loqosu';
+$_['entry_icon']                       = 'İkon';
+$_['entry_image_category']             = 'Kateqoriya Şəkil Ölçüsü (G x Y)';
+$_['entry_image_thumb']                = 'Məhsul Şəkli Baş Barmağın Ölçüsü (W x Y)';
+$_['entry_image_popup']                = 'Məhsul Şəkli Popup Ölçüsü (G x Y)';
+$_['entry_image_product']              = 'Məhsul Şəkli Siyahısının Ölçüsü (G x Y)';
+$_['entry_image_additional']           = 'Əlavə Məhsul Şəklin Ölçüsü (G x Y)';
+$_['entry_image_related']              = 'Əlaqədar Məhsul Şəklin Ölçüsü (G x Y)';
+$_['entry_image_article']              = 'Məqalə Şəklin Ölçüsü (G x Y)';
+$_['entry_image_topic']                = 'Mövzu Şəkil Ölçüsü (G x Y)';
+$_['entry_image_compare']              = 'Şəklin Ölçüsünü Müqayisə edin (G x Y)';
+$_['entry_image_wishlist']             = 'İstək Siyahısı Şəklin Ölçüsü (G x Y)';
+$_['entry_image_cart']                 = 'Səbət Şəklin Ölçüsü (G x Y)';
+$_['entry_image_location']             = 'Şəklin Ölçüsü (G x Y)';
+$_['entry_width']                      = 'Genişlik';
+$_['entry_height']                     = 'Hündürlük';
+
+// Help
+$_['help_url']                         = 'Mağazanıza tam URL daxil edin. Sonda \'/\' əlavə etməyinizə əmin olun. Misal: http://www.yourdomain.com/path/<br/><br/>Yeni mağaza yaratmaq üçün kataloqlardan istifadə etməyin. Siz həmişə hostinqinizə başqa domen və ya alt domeni göstərməlisiniz.';
+$_['help_icon']                        = 'İşarə 16px x 16px olan PNG formatında olmalıdır.';
+$_['help_geocode']                     = 'Lütfən, mağazanızın coğrafi kodunu əl ilə daxil edin.';
+$_['help_open']                        = 'Mağazalarınızın açılış saatlarını doldurun.';
+$_['help_comment']                     = 'Bu sahə müştəriyə demək istədiyiniz hər hansı xüsusi qeydlər üçündür, yəni Mağaza çekləri qəbul etmir.';
+$_['help_location']                    = 'İstədiyiniz müxtəlif mağaza yerləri bizimlə əlaqə formasında göstərilir.';
+$_['help_currency']                    = 'Varsayılan valyutanı dəyişdirin. Dəyişikliyi görmək və mövcud kukini sıfırlamaq üçün brauzerinizin keşini təmizləyin.';
+$_['help_pagination']                  = 'Hər səhifədə neçə kataloq elementinin göstərildiyini müəyyən edir (məhsullar, kateqoriyalar və s.)';
+$_['help_product_description_length']  = 'Siyahı görünüşündə qısa təsvir xarakter limiti (kateqoriyalar, xüsusi və s.)';
+$_['help_cookie']                      = 'Aİ Qanununun bir hissəsi kimi kuki siyasətini göstərin.';
+$_['help_gdpr']                        = 'Müştərilərin hesabın silinməsini tələb edə bilməsi kimi GDPR xüsusiyyətlərini aktivləşdirin.';
+$_['help_tax_default']                 = 'Müştəri daxil deyilsə, vergiləri hesablamaq üçün mağaza ünvanından istifadə edin. Müştərinin çatdırılması və ya ödəniş ünvanı üçün mağaza ünvanından istifadə edə bilərsiniz.';
+$_['help_tax_customer']                = 'Vergiləri hesablamaq üçün daxil olduqda müştərilərin defolt ünvanından istifadə edin. Siz müştərinin göndərmə və ya ödəniş ünvanı üçün standart ünvandan istifadə etməyi seçə bilərsiniz.';
+$_['help_customer_group']              = 'Defolt müştəri qrupu.';
+$_['help_customer_group_display']      = 'Qeydiyyat zamanı yeni müştərilərin topdansatış və biznes kimi istifadə etmək üçün seçə biləcəyi müştəri qruplarını göstərin.';
+$_['help_customer_price']              = 'Qiymətləri yalnız müştəri daxil olduqda göstərin.';
+$_['help_account']                     = 'Hesab yaradılmazdan əvvəl insanları şərtlərlə razılaşmağa məcbur edir.';
+$_['help_checkout_guest']              = 'Müştərilərə hesab yaratmadan ödəniş etməyə icazə verin. Yüklənə bilən məhsul alış-veriş səbətində olduqda bu, mövcud olmayacaq.';
+$_['help_checkout']                    = 'Müştərinin ödəniş etməsindən əvvəl insanları şərtlərlə razılaşmağa məcbur edir.';
+$_['help_stock_display']               = 'Məhsul səhifəsində ehtiyat miqdarını göstərin.';
+$_['help_stock_checkout']              = 'Müştərilərə sifariş etdikləri məhsullar anbarda olmadıqda hələ də ödəniş etmələrinə icazə verin.';
+$_['help_product_count']               = 'Vitrin başlığı kateqoriya menyusunda alt kateqoriyalar daxilində məhsulların sayını göstərin. Xəbərdar olun, bu, çoxlu alt kateqoriyalı mağazalar üçün ifrat performans hitinə səbəb olacaq!';
+
+// Error
+$_['error_warning']                    = 'Xəbərdarlıq: Zəhmət olmasa formanı səhvlər üçün diqqətlə yoxlayın!';
+$_['error_permission']                 = 'Xəbərdarlıq: Mağazaları dəyişdirmək icazəniz yoxdur!';
+$_['error_url']                        = 'Mağaza URL-i tələb olunur!';
+$_['error_meta_title']                 = 'Başlıq 3 ilə 32 simvol arasında olmalıdır!';
+$_['error_name']                       = 'Mağaza Adı 3 və 32 simvol arasında olmalıdır!';
+$_['error_owner']                      = 'Mağaza Sahibi 3 və 64 simvol arasında olmalıdır!';
+$_['error_address']                    = 'Mağaza ünvanı 10 ilə 256 simvol arasında olmalıdır!';
+$_['error_email']                      = 'E-poçt ünvanı etibarlı deyil!';
+$_['error_product_description_length'] = 'Məhsulun təsviri uzunluğu tələb olunur!';
+$_['error_pagination']                 = 'Səhifə tələb olunur!';
+$_['error_customer_group_display']     = 'Bu funksiyadan istifadə edəcəksinizsə, standart müştəri qrupunu daxil etməlisiniz!';
+$_['error_default']                    = 'Xəbərdarlıq: Siz standart mağazanızı silə bilməzsiniz!';
+$_['error_order']                      = 'Xəbərdarlıq: Hazırda %s sifarişlərə təyin edildiyi üçün bu Mağaza silinə bilməz!';
+$_['error_subscription']               = 'Xəbərdarlıq: Hazırda %s abunəliklərə təyin edildiyi üçün bu Mağaza silinə bilməz!';
+$_['error_image_thumb']                = 'Məhsul Şəkli Thumb Ölçüsü tələb olunur!';
+$_['error_image_popup']                = 'Məhsul Şəkili Popup Ölçüləri tələb olunur!';
+$_['error_image_product']              = 'Məhsul siyahısı Ölçü ölçüləri tələb olunur!';
+$_['error_image_category']             = 'Kateqoriya Siyahısı Ölçü ölçüləri tələb olunur!';
+$_['error_image_additional']           = 'Əlavə Məhsul Şəkil Ölçüsü tələb olunur!';
+$_['error_image_related']              = 'Əlaqədar Məhsul Şəkli Ölçüsü tələb olunur!';
+$_['error_image_article']              = 'Məqalə Şəkil Ölçüsü tələb olunur!';
+$_['error_image_topic']                = 'Mövzu Şəkil Ölçüsü tələb olunur!';
+$_['error_image_compare']              = 'Tələb olunan Şəkil Ölçüsü ölçülərini müqayisə edin!';
+$_['error_image_wishlist']             = 'İstək Siyahısı Şəkil Ölçüsü tələb olunur!';
+$_['error_image_cart']                 = 'Səbət Şəkil Ölçüsü tələb olunur!';
+$_['error_image_location']             = 'Mağaza Şəklin Ölçüsü tələb olunur!';

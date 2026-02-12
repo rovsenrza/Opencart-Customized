@@ -1,0 +1,137 @@
+<?php
+// Heading
+$_['heading_title']              = 'Məhsullar';
+
+// Text
+$_['text_success']               = 'Uğur: Dəyişdirilmiş məhsullarınız var!';
+$_['text_variant']               = 'Nəzərə alın ki, bu məhsul variantıdır, çünki siz <a href="%s" target="_blank" class="alert-link">master məhsul</a> datasını ləğv etməlisiniz. Əks halda data yadda saxlanıldıqda <a href="%s" target="_blank" class="alert-link">master məhsul</a> datası ilə əvəz olunacaq.';
+$_['text_list']                  = 'Məhsul siyahısı';
+$_['text_add']                   = 'Məhsul əlavə edin';
+$_['text_edit']                  = 'Məhsulu Redaktə edin';
+$_['text_variant_add']           = 'Variant əlavə edin';
+$_['text_model']                 = 'Model';
+$_['text_price']                 = 'Qiymət';
+$_['text_stock']                 = 'Səhm';
+$_['text_specification']         = 'Spesifikasiya';
+$_['text_filter']                = 'Filtr';
+$_['text_default']               = 'Defolt';
+$_['text_keyword']               = 'Boşluqlardan istifadə etməyin, əvəzinə boşluqları dəyişdirin - və SEO URL-nin qlobal miqyasda unikal olduğundan əmin olun.';
+$_['text_option_add']            = 'Seçim əlavə edin';
+$_['text_option_value']          = 'Seçim Dəyəri';
+$_['text_select']                = 'seçin';
+$_['text_radio']                 = 'Radio';
+$_['text_checkbox']              = 'Yoxlama qutusu';
+$_['text_input']                 = 'Giriş';
+$_['text_text']                  = 'Mətn';
+$_['text_textarea']              = 'Mətn sahəsi';
+$_['text_file']                  = 'Fayl';
+$_['text_date']                  = 'Tarix';
+$_['text_datetime']              = 'Tarix &amp; Saat';
+$_['text_time']                  = 'Vaxt';
+$_['text_fixed']                 = 'Sabit məbləğ';
+$_['text_subtract']              = 'Çıxar';
+$_['text_percentage']            = 'Faiz';
+$_['text_image']                 = 'Şəkil';
+$_['text_image_additional']      = 'Əlavə Şəkillər';
+$_['text_reward']                = 'Ballar Alın';
+$_['text_points']                = 'Mükafat xalları';
+$_['text_from']                  = 'From';
+$_['text_to']                    = 'Kimə';
+$_['text_subscription_trial']    = '%s hər %d %s üçün %d ödəniş(lər), sonra';
+$_['text_subscription_duration'] = '%s hər %d %s üçün %d ödəniş(lər)';
+$_['text_subscription_cancel']   = 'Ləğv edilənə qədər %s hər %d %s(s)';
+$_['text_day']                   = 'gün';
+$_['text_week']                  = 'həftə';
+$_['text_semi_month']            = 'yarım ay';
+$_['text_month']                 = 'ay';
+$_['text_year']                  = 'il';
+$_['text_report']                = 'Hesabatlar';
+
+// Column
+$_['column_name']                = 'Məhsulun adı';
+$_['column_model']               = 'Model';
+$_['column_image']               = 'Şəkil';
+$_['column_price']               = 'Qiymət';
+$_['column_quantity']            = 'Kəmiyyət';
+$_['column_status']              = 'Vəziyyət';
+$_['column_ip']                  = 'IP';
+$_['column_store']               = 'Mağaza';
+$_['column_country']             = 'ölkə';
+$_['column_date_added']          = 'Əlavə Tarix';
+$_['column_action']              = 'Fəaliyyət';
+
+// Entry
+$_['entry_name']                 = 'Məhsulun adı';
+$_['entry_description']          = 'Təsvir';
+$_['entry_meta_title']           = 'Meta Teq Başlığı';
+$_['entry_meta_keyword']         = 'Meta Tag Açar Sözlər';
+$_['entry_meta_description']     = 'Meta Teq Təsviri';
+$_['entry_store']                = 'Mağazalar';
+$_['entry_keyword']              = 'Açar söz';
+$_['entry_model']                = 'Model';
+$_['entry_product_code']         = 'Məhsul Kodları';
+$_['entry_location']             = 'Məkan';
+$_['entry_shipping']             = 'Çatdırılma tələb olunur';
+$_['entry_manufacturer']         = 'İstehsalçı';
+$_['entry_date_available']       = 'Mövcud tarix';
+$_['entry_quantity']             = 'Kəmiyyət';
+$_['entry_minimum']              = 'Minimum Miqdar';
+$_['entry_stock_status']         = 'Stokda Yoxdur Vəziyyəti';
+$_['entry_price']                = 'Qiymət';
+$_['entry_trial_price']          = 'Sınaq Qiyməti';
+$_['entry_tax_class']            = 'Vergi günah';
+$_['entry_points']               = 'Xallar';
+$_['entry_subtract']             = 'Səhm çıxarın';
+$_['entry_weight_class']         = 'Çəki sinfi';
+$_['entry_weight']               = 'Çəki';
+$_['entry_dimension']            = 'Ölçülər (U x G x Y)';
+$_['entry_length_class']         = 'Uzunluq sinfi';
+$_['entry_length']               = 'Uzunluq';
+$_['entry_width']                = 'Genişlik';
+$_['entry_height']               = 'Hündürlük';
+$_['entry_option']               = 'Seçim';
+$_['entry_option_value']         = 'Seçim Dəyəri';
+$_['entry_customer_group']       = 'Müştəri Qrupu';
+$_['entry_special']              = 'Xüsusi';
+$_['entry_type']                 = 'Növ';
+$_['entry_date_start']           = 'Başlama tarixi';
+$_['entry_date_end']             = 'Bitmə tarixi';
+$_['entry_priority']             = 'Prioritet';
+$_['entry_attribute']            = 'Atribut';
+$_['entry_attribute_group']      = 'Atribut Qrupu';
+$_['entry_image']                = 'Şəkil';
+$_['entry_text']                 = 'Mətn';
+$_['entry_required']             = 'Tələb olunur';
+$_['entry_status']               = 'Vəziyyət';
+$_['entry_sort_order']           = 'Sırala';
+$_['entry_category']             = 'Kateqoriyalar';
+$_['entry_filter']               = 'Filtrlər';
+$_['entry_download']             = 'Yükləmələr';
+$_['entry_related']              = 'Əlaqədar Məhsullar';
+$_['entry_tag']                  = 'Məhsul Teqləri';
+$_['entry_reward']               = 'Mükafat xalları';
+$_['entry_layout']               = 'Layout Override';
+$_['entry_subscription']         = 'Abunə Planı';
+
+// Help
+$_['help_tag']                   = 'Vergül ayrıldı';
+$_['help_minimum']               = 'Minimum sifariş məbləğini məcbur edin';
+$_['help_stock_status']          = 'Məhsul anbarda tükəndikdə status göstərilir';
+$_['help_manufacturer']          = '(Avtomatik tamamlama)';
+$_['help_category']              = '(Avtomatik tamamlama)';
+$_['help_filter']                = '(Avtomatik tamamlama)';
+$_['help_download']              = '(Avtomatik tamamlama)';
+$_['help_related']               = '(Avtomatik tamamlama)';
+$_['help_option']                = '(Avtomatik tamamlama)';
+$_['help_points']                = 'Bu elementi almaq üçün lazım olan xalların sayı. Bu məhsulun xalla alınmasını istəmirsinizsə, 0 olaraq buraxın.';
+
+// Error
+$_['error_warning']              = 'Xəbərdarlıq: Zəhmət olmasa formanı səhvlər üçün diqqətlə yoxlayın!';
+$_['error_permission']           = 'Xəbərdarlıq: Məhsulları dəyişdirmək icazəniz yoxdur!';
+$_['error_name']                 = 'Məhsulun adı 1-dən çox və 255 simvoldan az olmalıdır!';
+$_['error_meta_title']           = 'Meta Başlıq 1-dən çox və 255 simvoldan az olmalıdır!';
+$_['error_model']                = 'Məhsul Modeli 1-dən çox və 64 simvoldan az olmalıdır!';
+$_['error_keyword']              = 'SEO URL 1 ilə 64 simvol arasında olmalıdır!';
+$_['error_keyword_exists']       = 'SEO URL unikal olmalıdır!';
+$_['error_keyword_character']    = 'Açar söz yalnız a-z, 0-9, - və _ simvollarından istifadə edə bilər!';
+$_['error_required']             = '%s tələb olunur!';

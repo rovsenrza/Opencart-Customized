@@ -1,0 +1,101 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-sitemap"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_information }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_sitemap_url }}</label>
+            <div class="col-sm-10">
+              <div class="form-control"><a id="sitemap-url" href="{{ sitemap_url }}" target="_blank">{{ sitemap_url }}</a></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_date_modified }}</label>
+            <div class="col-sm-10">
+              <div class="form-control" id="sitemap-date-modified">{{ date_modified ? date_modified : text_not_generated }}</div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_file_size }}</label>
+            <div class="col-sm-10">
+              <div class="form-control" id="sitemap-file-size">{{ file_size ? file_size : text_not_generated }}</div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>{{ text_generate }}</legend>
+          <p class="text-muted">{{ text_description }}</p>
+          <button type="button" id="button-generate" class="btn btn-primary"><i class="fa-solid fa-sitemap"></i> {{ button_generate }}</button>
+          <div id="sitemap-status" class="mt-3"></div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-generate').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: '{{ generate }}',
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+            $('#sitemap-status').removeClass('text-danger text-success').text('{{ text_generating|escape('js') }}');
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#sitemap-status').addClass('text-danger').text(json['error']);
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                if (json['text']) {
+                    $('#sitemap-status').addClass('text-success').text(json['text']);
+                } else {
+                    $('#sitemap-status').addClass('text-success').text(json['success']);
+                }
+
+                if (json['date_modified']) {
+                    $('#sitemap-date-modified').text(json['date_modified']);
+                }
+
+                if (json['file_size']) {
+                    $('#sitemap-file-size').text(json['file_size']);
+                }
+
+                if (json['sitemap']) {
+                    $('#sitemap-url').attr('href', json['sitemap']).text(json['sitemap']);
+                }
+
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            $('#sitemap-status').addClass('text-danger').text(thrownError);
+        }
+    });
+});
+//--></script>
+{{ footer }}
