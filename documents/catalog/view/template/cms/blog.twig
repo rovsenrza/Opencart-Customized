@@ -1,0 +1,72 @@
+{{ header }}
+<div id="product-category" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">
+    {{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if image %}
+        <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-fluid cms-original-image mb-3"/>
+      {% endif %}
+      {% if description %}
+        <div class="mb-3">{{ description }}</div>
+      {% endif %}
+      <hr/>
+      <h3>{{ text_refine }}</h3>
+      {% if topics %}
+        <div class="input-group dropdown mb-3">
+          <select name="topic_id" id="input-topic" class="form-select">
+            <option value="">{{ text_all }}</option>
+            {% for topic in topics %}
+              <option value="{{ topic.topic_id }}"{% if topic.topic_id == topic_id %} selected{% endif %}>{{ topic.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+      {% if articles %}
+        {% for article in articles %}
+          <div class="mb-3">
+            <h2><a href="{{ article.href }}">{{ article.name }}</a></h2>
+            {% if article.image %}
+              <div><a href="{{ article.href }}"><img src="{{ article.image }}" title="{{ article.name }}" alt="{{ article.name }}" class="img-fluid cms-original-image mb-1"/></a></div>
+            {% endif %}
+            <ul class="list-inline">
+              <li class="list-inline-item">{{ text_by }} <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
+              <li class="list-inline-item">{{ article.date_added }}</li>
+              <li class="list-inline-item">{{ article.comment_total }} {{ text_comment }}</li>
+            </ul>
+            <p class="mb-3">{{ article.description }}</p>
+            <div class="text-end"><a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a></div>
+          </div>
+        {% endfor %}
+        <div class="row">
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
+        </div>
+      {% else %}
+        <p class="text-center">{{ text_no_results }}</p>
+      {% endif %}
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#input-topic').on('change', function() {
+    url = 'index.php?route=cms/blog&language={{ language }}';
+
+    var topic_id = $('#input-topic').prop('value');
+
+    if (topic_id > 0) {
+        url += '&topic_id=' + topic_id;
+    }
+
+    location = url;
+});
+//--></script>
+{{ footer }}
