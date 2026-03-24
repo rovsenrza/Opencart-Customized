@@ -195,29 +195,40 @@ class __TwigTemplate_065b4dcca5b95a33098f40942f31ba02 extends Template
             $context = array_intersect_key($context, $_parent) + $_parent;
             // line 51
             yield "          </table>
-          <p class=\"text-end\"><a href=\"";
-            // line 52
+          <p class=\"text-end\">
+            <a href=\"";
+            // line 53
             yield ($context["cart"] ?? null);
             yield "\"><strong><i class=\"fa-solid fa-cart-shopping\"></i> ";
             yield ($context["text_cart"] ?? null);
-            yield "</strong></a>&nbsp;&nbsp;&nbsp;<a href=\"";
-            yield ($context["checkout"] ?? null);
-            yield "\"><strong><i class=\"fa-solid fa-share\"></i> ";
-            yield ($context["text_checkout"] ?? null);
-            yield "</strong></a></p>
+            yield "</strong></a>
+            ";
+            // line 54
+            if (($context["checkout"] ?? null)) {
+                // line 55
+                yield "              &nbsp;&nbsp;&nbsp;<a href=\"";
+                yield ($context["checkout"] ?? null);
+                yield "\"><strong><i class=\"fa-solid fa-share\"></i> ";
+                yield ($context["text_checkout"] ?? null);
+                yield "</strong></a>
+            ";
+            }
+            // line 57
+            yield "          </p>
         </div>
       </li>
     ";
         } else {
-            // line 56
+            // line 61
             yield "      <li class=\"text-center p-4\">";
             yield ($context["text_no_results"] ?? null);
             yield "</li>
     ";
         }
-        // line 58
+        // line 63
         yield "  </ul>
-</div>";
+</div>
+";
         yield from [];
     }
 
@@ -242,7 +253,7 @@ class __TwigTemplate_065b4dcca5b95a33098f40942f31ba02 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  219 => 58,  213 => 56,  200 => 52,  197 => 51,  188 => 48,  184 => 47,  181 => 46,  177 => 45,  172 => 42,  161 => 37,  157 => 36,  151 => 35,  146 => 33,  142 => 32,  138 => 30,  130 => 27,  127 => 26,  124 => 25,  116 => 22,  113 => 21,  110 => 20,  99 => 17,  96 => 16,  92 => 15,  85 => 13,  77 => 10,  63 => 9,  60 => 8,  56 => 7,  52 => 5,  50 => 4,  45 => 2,  42 => 1,);
+        return array (  229 => 63,  223 => 61,  217 => 57,  209 => 55,  207 => 54,  201 => 53,  197 => 51,  188 => 48,  184 => 47,  181 => 46,  177 => 45,  172 => 42,  161 => 37,  157 => 36,  151 => 35,  146 => 33,  142 => 32,  138 => 30,  130 => 27,  127 => 26,  124 => 25,  116 => 22,  113 => 21,  110 => 20,  99 => 17,  96 => 16,  92 => 15,  85 => 13,  77 => 10,  63 => 9,  60 => 8,  56 => 7,  52 => 5,  50 => 4,  45 => 2,  42 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -298,13 +309,19 @@ class __TwigTemplate_065b4dcca5b95a33098f40942f31ba02 extends Template
               </tr>
             {% endfor %}
           </table>
-          <p class=\"text-end\"><a href=\"{{ cart }}\"><strong><i class=\"fa-solid fa-cart-shopping\"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href=\"{{ checkout }}\"><strong><i class=\"fa-solid fa-share\"></i> {{ text_checkout }}</strong></a></p>
+          <p class=\"text-end\">
+            <a href=\"{{ cart }}\"><strong><i class=\"fa-solid fa-cart-shopping\"></i> {{ text_cart }}</strong></a>
+            {% if checkout %}
+              &nbsp;&nbsp;&nbsp;<a href=\"{{ checkout }}\"><strong><i class=\"fa-solid fa-share\"></i> {{ text_checkout }}</strong></a>
+            {% endif %}
+          </p>
         </div>
       </li>
     {% else %}
       <li class=\"text-center p-4\">{{ text_no_results }}</li>
     {% endif %}
   </ul>
-</div>", "catalog/view/template/common/cart.twig", "/Applications/MAMP/htdocs/catalog/view/template/common/cart.twig");
+</div>
+", "catalog/view/template/common/cart.twig", "/Applications/MAMP/htdocs/catalog/view/template/common/cart.twig");
     }
 }

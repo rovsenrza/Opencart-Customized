@@ -98,16 +98,21 @@ class __TwigTemplate_27193f9315e28bcf1a5c7da4103a47c0 extends Template
         yield "\">";
         yield ($context["text_contact"] ?? null);
         yield "</a></li>
-          <li><a href=\"";
-        // line 22
-        yield ($context["return"] ?? null);
-        yield "\">";
-        yield ($context["text_return"] ?? null);
-        yield "</a></li>
           ";
-        // line 23
+        // line 22
+        if (($context["return"] ?? null)) {
+            // line 23
+            yield "            <li><a href=\"";
+            yield ($context["return"] ?? null);
+            yield "\">";
+            yield ($context["text_return"] ?? null);
+            yield "</a></li>
+          ";
+        }
+        // line 25
+        yield "          ";
         if (($context["gdpr"] ?? null)) {
-            // line 24
+            // line 26
             yield "            <li><a href=\"";
             yield ($context["gdpr"] ?? null);
             yield "\">";
@@ -115,7 +120,7 @@ class __TwigTemplate_27193f9315e28bcf1a5c7da4103a47c0 extends Template
             yield "</a></li>
           ";
         }
-        // line 26
+        // line 28
         yield "          <li><a href=\"";
         yield ($context["sitemap"] ?? null);
         yield "\">";
@@ -125,20 +130,20 @@ class __TwigTemplate_27193f9315e28bcf1a5c7da4103a47c0 extends Template
       </div>
       <div class=\"col-sm-3\">
         <h5>";
-        // line 30
+        // line 32
         yield ($context["text_extra"] ?? null);
         yield "</h5>
         <ul class=\"list-unstyled\">
           <li><a href=\"";
-        // line 32
+        // line 34
         yield ($context["manufacturer"] ?? null);
         yield "\">";
         yield ($context["text_manufacturer"] ?? null);
         yield "</a></li>
           ";
-        // line 33
+        // line 35
         if (($context["affiliate"] ?? null)) {
-            // line 34
+            // line 36
             yield "            <li><a href=\"";
             yield ($context["affiliate"] ?? null);
             yield "\">";
@@ -146,7 +151,7 @@ class __TwigTemplate_27193f9315e28bcf1a5c7da4103a47c0 extends Template
             yield "</a></li>
           ";
         }
-        // line 36
+        // line 38
         yield "          <li><a href=\"";
         yield ($context["special"] ?? null);
         yield "\">";
@@ -154,42 +159,65 @@ class __TwigTemplate_27193f9315e28bcf1a5c7da4103a47c0 extends Template
         yield "</a></li>
         </ul>
       </div>
-      <div class=\"col-sm-3\">
-        <h5>";
-        // line 40
-        yield ($context["text_account"] ?? null);
-        yield "</h5>
-        <ul class=\"list-unstyled\">
-          <li><a href=\"";
-        // line 42
-        yield ($context["account"] ?? null);
-        yield "\">";
-        yield ($context["text_account"] ?? null);
-        yield "</a></li>
-          <li><a href=\"";
-        // line 43
-        yield ($context["order"] ?? null);
-        yield "\">";
-        yield ($context["text_order"] ?? null);
-        yield "</a></li>
-          <li><a href=\"";
-        // line 44
-        yield ($context["wishlist"] ?? null);
-        yield "\">";
-        yield ($context["text_wishlist"] ?? null);
-        yield "</a></li>
-          <li><a href=\"";
-        // line 45
-        yield ($context["newsletter"] ?? null);
-        yield "\">";
-        yield ($context["text_newsletter"] ?? null);
-        yield "</a></li>
-        </ul>
-      </div>
-    </div>
+      ";
+        // line 41
+        if (($context["account_links_visible"] ?? null)) {
+            // line 42
+            yield "        <div class=\"col-sm-3\">
+          <h5>";
+            // line 43
+            yield ($context["text_account"] ?? null);
+            yield "</h5>
+          <ul class=\"list-unstyled\">
+            ";
+            // line 45
+            if (($context["account_enabled"] ?? null)) {
+                // line 46
+                yield "              <li><a href=\"";
+                yield ($context["account"] ?? null);
+                yield "\">";
+                yield ($context["text_account"] ?? null);
+                yield "</a></li>
+              <li><a href=\"";
+                // line 47
+                yield ($context["order"] ?? null);
+                yield "\">";
+                yield ($context["text_order"] ?? null);
+                yield "</a></li>
+            ";
+            }
+            // line 49
+            yield "            ";
+            if (($context["wishlist_enabled"] ?? null)) {
+                // line 50
+                yield "              <li><a href=\"";
+                yield ($context["wishlist"] ?? null);
+                yield "\">";
+                yield ($context["text_wishlist"] ?? null);
+                yield "</a></li>
+            ";
+            }
+            // line 52
+            yield "            ";
+            if (($context["account_enabled"] ?? null)) {
+                // line 53
+                yield "              <li><a href=\"";
+                yield ($context["newsletter"] ?? null);
+                yield "\">";
+                yield ($context["text_newsletter"] ?? null);
+                yield "</a></li>
+            ";
+            }
+            // line 55
+            yield "          </ul>
+        </div>
+      ";
+        }
+        // line 58
+        yield "    </div>
     <hr>
     <p>";
-        // line 50
+        // line 60
         yield ($context["powered"] ?? null);
         yield "</p>
     <!--
@@ -200,28 +228,28 @@ Please donate via PayPal to donate@opencart.com
 </footer>
 </div>
 ";
-        // line 58
+        // line 68
         yield ($context["cookie"] ?? null);
         yield "
 <script src=\"";
-        // line 59
+        // line 69
         yield ($context["bootstrap"] ?? null);
         yield "\" type=\"text/javascript\"></script>
 ";
-        // line 60
+        // line 70
         $context['_parent'] = $context;
         $context['_seq'] = CoreExtension::ensureTraversable(($context["scripts"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["script"]) {
-            // line 61
+            // line 71
             yield "  <script src=\"";
-            yield CoreExtension::getAttribute($this->env, $this->source, $context["script"], "href", [], "any", false, false, false, 61);
+            yield CoreExtension::getAttribute($this->env, $this->source, $context["script"], "href", [], "any", false, false, false, 71);
             yield "\" type=\"text/javascript\"></script>
 ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_key'], $context['script'], $context['_parent']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 63
+        // line 73
         yield "</body></html>
 ";
         yield from [];
@@ -248,7 +276,7 @@ Please donate via PayPal to donate@opencart.com
      */
     public function getDebugInfo(): array
     {
-        return array (  225 => 63,  216 => 61,  212 => 60,  208 => 59,  204 => 58,  193 => 50,  183 => 45,  177 => 44,  171 => 43,  165 => 42,  160 => 40,  150 => 36,  142 => 34,  140 => 33,  134 => 32,  129 => 30,  119 => 26,  111 => 24,  109 => 23,  103 => 22,  97 => 21,  92 => 19,  89 => 18,  84 => 15,  73 => 13,  68 => 12,  60 => 10,  58 => 9,  53 => 7,  50 => 6,  48 => 5,  42 => 1,);
+        return array (  253 => 73,  244 => 71,  240 => 70,  236 => 69,  232 => 68,  221 => 60,  217 => 58,  212 => 55,  204 => 53,  201 => 52,  193 => 50,  190 => 49,  183 => 47,  176 => 46,  174 => 45,  169 => 43,  166 => 42,  164 => 41,  155 => 38,  147 => 36,  145 => 35,  139 => 34,  134 => 32,  124 => 28,  116 => 26,  113 => 25,  105 => 23,  103 => 22,  97 => 21,  92 => 19,  89 => 18,  84 => 15,  73 => 13,  68 => 12,  60 => 10,  58 => 9,  53 => 7,  50 => 6,  48 => 5,  42 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -274,7 +302,9 @@ Please donate via PayPal to donate@opencart.com
         <h5>{{ text_service }}</h5>
         <ul class=\"list-unstyled\">
           <li><a href=\"{{ contact }}\">{{ text_contact }}</a></li>
-          <li><a href=\"{{ return }}\">{{ text_return }}</a></li>
+          {% if return %}
+            <li><a href=\"{{ return }}\">{{ text_return }}</a></li>
+          {% endif %}
           {% if gdpr %}
             <li><a href=\"{{ gdpr }}\">{{ text_gdpr }}</a></li>
           {% endif %}
@@ -291,15 +321,23 @@ Please donate via PayPal to donate@opencart.com
           <li><a href=\"{{ special }}\">{{ text_special }}</a></li>
         </ul>
       </div>
-      <div class=\"col-sm-3\">
-        <h5>{{ text_account }}</h5>
-        <ul class=\"list-unstyled\">
-          <li><a href=\"{{ account }}\">{{ text_account }}</a></li>
-          <li><a href=\"{{ order }}\">{{ text_order }}</a></li>
-          <li><a href=\"{{ wishlist }}\">{{ text_wishlist }}</a></li>
-          <li><a href=\"{{ newsletter }}\">{{ text_newsletter }}</a></li>
-        </ul>
-      </div>
+      {% if account_links_visible %}
+        <div class=\"col-sm-3\">
+          <h5>{{ text_account }}</h5>
+          <ul class=\"list-unstyled\">
+            {% if account_enabled %}
+              <li><a href=\"{{ account }}\">{{ text_account }}</a></li>
+              <li><a href=\"{{ order }}\">{{ text_order }}</a></li>
+            {% endif %}
+            {% if wishlist_enabled %}
+              <li><a href=\"{{ wishlist }}\">{{ text_wishlist }}</a></li>
+            {% endif %}
+            {% if account_enabled %}
+              <li><a href=\"{{ newsletter }}\">{{ text_newsletter }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
     </div>
     <hr>
     <p>{{ powered }}</p>

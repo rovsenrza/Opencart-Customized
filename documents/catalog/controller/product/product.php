@@ -247,6 +247,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);
 
 			$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+			$data['cart_enabled'] = $this->isFeatureEnabled('cart');
+			$data['wishlist_enabled'] = $this->isFeatureEnabled('wishlist');
 
 			$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
@@ -305,7 +307,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['review_status'] = (int)$this->config->get('config_review_status');
 			$data['review'] = $this->load->controller('product/review');
 
-			$data['wishlist_add'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
+			$data['wishlist_add'] = $data['wishlist_enabled'] ? $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language')) : '';
 			$data['compare_add'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
 
 			// Image
@@ -474,5 +476,22 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Is Feature Enabled
+	 *
+	 * @param string $feature
+	 *
+	 * @return bool
+	 */
+	private function isFeatureEnabled(string $feature): bool {
+		$key = 'config_feature_' . $feature;
+
+		if (!$this->config->has($key)) {
+			return true;
+		}
+
+		return (int)$this->config->get($key) === 1;
 	}
 }

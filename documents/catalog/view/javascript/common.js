@@ -128,6 +128,15 @@ window.ocGuestWishlistSyncTotal = function() {
     }
 };
 
+window.ocWishlistSyncTotalFromServerText = function(totalText) {
+    var $wishlist = $('#wishlist-total');
+
+    if ($wishlist.length && totalText) {
+        $wishlist.attr('title', totalText);
+        $wishlist.find('span').text(totalText);
+    }
+};
+
 // Observe
 +function($) {
     $.fn.observe = function(callback) {
@@ -165,9 +174,7 @@ $(document).ready(function() {
         window.ocInitFrontendAlertSystem();
     }
 
-    if (window.ocCustomerLogged && typeof window.ocGuestWishlistClear === 'function') {
-        window.ocGuestWishlistClear();
-    } else if (typeof window.ocGuestWishlistSyncTotal === 'function') {
+    if (!window.ocCustomerLogged && typeof window.ocGuestWishlistSyncTotal === 'function') {
         window.ocGuestWishlistSyncTotal();
     }
 });
@@ -443,9 +450,10 @@ $(document).on('submit', 'form', function (e) {
         }
 
         var request_url = action.replaceAll('&amp;', '&');
-        var is_cart_add = request_url.indexOf('route=checkout/cart.add') !== -1;
-        var is_wishlist_add = request_url.indexOf('route=account/wishlist.add') !== -1;
-        var is_login = request_url.indexOf('route=account/login.login') !== -1;
+        var normalized_request_url = request_url.toLowerCase();
+        var is_cart_add = normalized_request_url.indexOf('route=checkout/cart.add') !== -1 || normalized_request_url.indexOf('/checkout/cart.add') !== -1;
+        var is_wishlist_add = normalized_request_url.indexOf('route=account/wishlist.add') !== -1 || normalized_request_url.indexOf('/account/wishlist.add') !== -1;
+        var is_login = normalized_request_url.indexOf('route=account/login.login') !== -1 || normalized_request_url.indexOf('/account/login.login') !== -1;
 
         if (is_wishlist_add && !window.ocCustomerLogged) {
             var product_id = parseInt($(form).find('input[name=\'product_id\']').first().val(), 10);
@@ -513,6 +521,10 @@ $(document).on('submit', 'form', function (e) {
                     if (!is_cart_add) {
                         location = json['redirect'];
                     }
+                }
+
+                if (is_wishlist_add && json['total'] && typeof window.ocWishlistSyncTotalFromServerText === 'function') {
+                    window.ocWishlistSyncTotalFromServerText(json['total']);
                 }
 
                 if (is_cart_add && typeof window.ocShowCartResponseAlerts === 'function') {

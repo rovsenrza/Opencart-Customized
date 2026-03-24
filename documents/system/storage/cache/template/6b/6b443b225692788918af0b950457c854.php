@@ -102,74 +102,87 @@ class __TwigTemplate_82b05f02387f07d0199378dbb601249c extends Template
                 yield "\">";
                 yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "name", [], "any", false, false, false, 19);
                 yield "</a>
-              <form id=\"form-product-";
+              ";
                 // line 20
-                yield ($context["product_row"] ?? null);
-                yield "\" action=\"";
-                yield ($context["cart_add"] ?? null);
-                yield "\" method=\"post\" data-oc-toggle=\"ajax\" data-oc-load=\"";
-                yield ($context["cart"] ?? null);
-                yield "\" data-oc-target=\"#cart\">
-                <input type=\"hidden\" name=\"product_id\" value=\"";
-                // line 21
-                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "product_id", [], "any", false, false, false, 21);
-                yield "\"/>
-                <input type=\"hidden\" name=\"quantity\" value=\"";
-                // line 22
-                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "minimum", [], "any", false, false, false, 22);
-                yield "\"/>
-              </form>
-            </td>
+                if (($context["cart_enabled"] ?? null)) {
+                    // line 21
+                    yield "                <form id=\"form-product-";
+                    yield ($context["product_row"] ?? null);
+                    yield "\" action=\"";
+                    yield ($context["cart_add"] ?? null);
+                    yield "\" method=\"post\" data-oc-toggle=\"ajax\" data-oc-load=\"";
+                    yield ($context["cart"] ?? null);
+                    yield "\" data-oc-target=\"#cart\">
+                  <input type=\"hidden\" name=\"product_id\" value=\"";
+                    // line 22
+                    yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "product_id", [], "any", false, false, false, 22);
+                    yield "\"/>
+                  <input type=\"hidden\" name=\"quantity\" value=\"";
+                    // line 23
+                    yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "minimum", [], "any", false, false, false, 23);
+                    yield "\"/>
+                </form>
+              ";
+                }
+                // line 26
+                yield "            </td>
             <td>";
-                // line 25
-                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "model", [], "any", false, false, false, 25);
+                // line 27
+                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "model", [], "any", false, false, false, 27);
                 yield "</td>
             <td class=\"text-end\">";
-                // line 26
-                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "stock", [], "any", false, false, false, 26);
+                // line 28
+                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "stock", [], "any", false, false, false, 28);
                 yield "</td>
             <td class=\"text-end text-nowrap\">
               ";
-                // line 28
-                if (CoreExtension::getAttribute($this->env, $this->source, $context["product"], "price", [], "any", false, false, false, 28)) {
-                    // line 29
+                // line 30
+                if (CoreExtension::getAttribute($this->env, $this->source, $context["product"], "price", [], "any", false, false, false, 30)) {
+                    // line 31
                     yield "                <div class=\"price\">
                   ";
-                    // line 30
-                    if ( !CoreExtension::getAttribute($this->env, $this->source, $context["product"], "special", [], "any", false, false, false, 30)) {
-                        // line 31
+                    // line 32
+                    if ( !CoreExtension::getAttribute($this->env, $this->source, $context["product"], "special", [], "any", false, false, false, 32)) {
+                        // line 33
                         yield "                    ";
-                        yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "price", [], "any", false, false, false, 31);
+                        yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "price", [], "any", false, false, false, 33);
                         yield "
                   ";
                     } else {
-                        // line 33
+                        // line 35
                         yield "                    <b>";
-                        yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "special", [], "any", false, false, false, 33);
+                        yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "special", [], "any", false, false, false, 35);
                         yield "</b> <s>";
-                        yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "price", [], "any", false, false, false, 33);
+                        yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "price", [], "any", false, false, false, 35);
                         yield "</s>
                   ";
                     }
-                    // line 35
+                    // line 37
                     yield "                </div>
               ";
                 }
-                // line 36
+                // line 38
                 yield "</td>
             <td class=\"text-end text-nowrap\" style=\"width: 1px;\">
               <div class=\"d-grid\">
-                <button type=\"submit\" form=\"form-product-";
-                // line 39
-                yield ($context["product_row"] ?? null);
-                yield "\" class=\"btn btn-primary mb-1\">";
-                yield ($context["button_cart"] ?? null);
-                yield "</button>
-                <a href=\"";
-                // line 40
-                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "remove", [], "any", false, false, false, 40);
-                yield "\" class=\"btn btn-danger\" data-product-id=\"";
-                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "product_id", [], "any", false, false, false, 40);
+                ";
+                // line 41
+                if (($context["cart_enabled"] ?? null)) {
+                    // line 42
+                    yield "                  <button type=\"submit\" form=\"form-product-";
+                    yield ($context["product_row"] ?? null);
+                    yield "\" class=\"btn btn-primary mb-1\">";
+                    yield ($context["button_cart"] ?? null);
+                    yield "</button>
+                ";
+                }
+                // line 44
+                yield "                <a href=\"";
+                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "remove", [], "any", false, false, false, 44);
+                yield "\" class=\"btn btn-danger btn-wishlist-remove\" data-remove-url=\"";
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["product"], "remove", [], "any", false, false, false, 44), "html_attr");
+                yield "\" data-product-id=\"";
+                yield CoreExtension::getAttribute($this->env, $this->source, $context["product"], "product_id", [], "any", false, false, false, 44);
                 yield "\">";
                 yield ($context["button_remove"] ?? null);
                 yield "</a>
@@ -177,21 +190,21 @@ class __TwigTemplate_82b05f02387f07d0199378dbb601249c extends Template
             </td>
           </tr>
           ";
-                // line 44
+                // line 48
                 $context["product_row"] = (($context["product_row"] ?? null) + 1);
-                // line 45
+                // line 49
                 yield "        ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_key'], $context['product'], $context['_parent']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 46
+            // line 50
             yield "      </tbody>
     </table>
   </div>
 ";
         } else {
-            // line 50
+            // line 54
             yield "  <p>";
             yield ($context["text_no_results"] ?? null);
             yield "</p>
@@ -221,7 +234,7 @@ class __TwigTemplate_82b05f02387f07d0199378dbb601249c extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  195 => 50,  189 => 46,  183 => 45,  181 => 44,  170 => 40,  164 => 39,  159 => 36,  155 => 35,  147 => 33,  141 => 31,  139 => 30,  136 => 29,  134 => 28,  129 => 26,  125 => 25,  119 => 22,  115 => 21,  107 => 20,  101 => 19,  87 => 18,  84 => 17,  79 => 16,  77 => 15,  70 => 11,  66 => 10,  62 => 9,  58 => 8,  54 => 7,  50 => 6,  44 => 2,  42 => 1,);
+        return array (  208 => 54,  202 => 50,  196 => 49,  194 => 48,  180 => 44,  172 => 42,  170 => 41,  165 => 38,  161 => 37,  153 => 35,  147 => 33,  145 => 32,  142 => 31,  140 => 30,  135 => 28,  131 => 27,  128 => 26,  122 => 23,  118 => 22,  109 => 21,  107 => 20,  101 => 19,  87 => 18,  84 => 17,  79 => 16,  77 => 15,  70 => 11,  66 => 10,  62 => 9,  58 => 8,  54 => 7,  50 => 6,  44 => 2,  42 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -245,10 +258,12 @@ class __TwigTemplate_82b05f02387f07d0199378dbb601249c extends Template
           <tr>
             <td class=\"text-center\">{% if product.thumb %}<a href=\"{{ product.href }}\"><img src=\"{{ product.thumb }}\" alt=\"{{ product.name }}\" title=\"{{ product.name }}\"/></a>{% endif %}</td>
             <td><a href=\"{{ product.href }}\">{{ product.name }}</a>
-              <form id=\"form-product-{{ product_row }}\" action=\"{{ cart_add }}\" method=\"post\" data-oc-toggle=\"ajax\" data-oc-load=\"{{ cart }}\" data-oc-target=\"#cart\">
-                <input type=\"hidden\" name=\"product_id\" value=\"{{ product.product_id }}\"/>
-                <input type=\"hidden\" name=\"quantity\" value=\"{{ product.minimum }}\"/>
-              </form>
+              {% if cart_enabled %}
+                <form id=\"form-product-{{ product_row }}\" action=\"{{ cart_add }}\" method=\"post\" data-oc-toggle=\"ajax\" data-oc-load=\"{{ cart }}\" data-oc-target=\"#cart\">
+                  <input type=\"hidden\" name=\"product_id\" value=\"{{ product.product_id }}\"/>
+                  <input type=\"hidden\" name=\"quantity\" value=\"{{ product.minimum }}\"/>
+                </form>
+              {% endif %}
             </td>
             <td>{{ product.model }}</td>
             <td class=\"text-end\">{{ product.stock }}</td>
@@ -264,8 +279,10 @@ class __TwigTemplate_82b05f02387f07d0199378dbb601249c extends Template
               {% endif %}</td>
             <td class=\"text-end text-nowrap\" style=\"width: 1px;\">
               <div class=\"d-grid\">
-                <button type=\"submit\" form=\"form-product-{{ product_row }}\" class=\"btn btn-primary mb-1\">{{ button_cart }}</button>
-                <a href=\"{{ product.remove }}\" class=\"btn btn-danger\" data-product-id=\"{{ product.product_id }}\">{{ button_remove }}</a>
+                {% if cart_enabled %}
+                  <button type=\"submit\" form=\"form-product-{{ product_row }}\" class=\"btn btn-primary mb-1\">{{ button_cart }}</button>
+                {% endif %}
+                <a href=\"{{ product.remove }}\" class=\"btn btn-danger btn-wishlist-remove\" data-remove-url=\"{{ product.remove|e('html_attr') }}\" data-product-id=\"{{ product.product_id }}\">{{ button_remove }}</a>
               </div>
             </td>
           </tr>

@@ -30,14 +30,33 @@ class Thumb extends \Opencart\System\Engine\Controller {
 	public function index(array $data): string {
 		$this->load->language('product/thumb');
 
-		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
+		$data['cart_enabled'] = $this->isFeatureEnabled('cart');
+		$data['wishlist_enabled'] = $this->isFeatureEnabled('wishlist');
 
-		$data['cart_add'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
-		$data['wishlist_add'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
+		$data['cart'] = $data['cart_enabled'] ? $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language')) : '';
+		$data['cart_add'] = $data['cart_enabled'] ? $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language')) : '';
+		$data['wishlist_add'] = $data['wishlist_enabled'] ? $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language')) : '';
 		$data['compare_add'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
 
 		$data['review_status'] = (int)$this->config->get('config_review_status');
 
 		return $this->load->view('product/thumb', $data);
+	}
+
+	/**
+	 * Is Feature Enabled
+	 *
+	 * @param string $feature
+	 *
+	 * @return bool
+	 */
+	private function isFeatureEnabled(string $feature): bool {
+		$key = 'config_feature_' . $feature;
+
+		if (!$this->config->has($key)) {
+			return true;
+		}
+
+		return (int)$this->config->get($key) === 1;
 	}
 }

@@ -15,7 +15,9 @@
 </div>
 <script type="text/javascript"><!--
 var $wishlist = $('#wishlist');
-var guestMode = String($wishlist.attr('data-guest')) === '1';
+var guestMode = String($wishlist.attr('data-guest')) === '1' || !window.ocCustomerLogged;
+var wishlistLanguage = '{{ language_code }}';
+var wishlistCustomerToken = '{{ customer_token }}';
 
 function loadGuestWishlist() {
     if (!guestMode) {
@@ -35,6 +37,29 @@ function loadGuestWishlist() {
             product_ids: JSON.stringify(ids)
         },
         success: function(html) {
+            // Keep localStorage aligned with products that are actually renderable on server side.
+            // This removes stale IDs (e.g. deleted/invalid products) that otherwise stay stuck.
+            var renderedIds = [];
+            var seen = {};
+            var productId;
+
+            $('<div>').html(html).find('.btn-wishlist-remove[data-product-id]').each(function() {
+                productId = parseInt($(this).attr('data-product-id'), 10);
+
+                if (productId > 0 && !seen[productId]) {
+                    seen[productId] = true;
+                    renderedIds.push(productId);
+                }
+            });
+
+            if (typeof window.ocGuestWishlistSet === 'function') {
+                window.ocGuestWishlistSet(renderedIds);
+            }
+
+            if (typeof window.ocGuestWishlistSyncTotal === 'function') {
+                window.ocGuestWishlistSyncTotal();
+            }
+
             $wishlist.html(html);
         }
     });
@@ -44,7 +69,7 @@ if (guestMode) {
     loadGuestWishlist();
 }
 
-$('#wishlist').on('click', '.btn-danger', function(e) {
+$('#wishlist').on('click', '.btn-wishlist-remove', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -69,8 +94,15 @@ $('#wishlist').on('click', '.btn-danger', function(e) {
         return;
     }
 
+    var productId = parseInt($(element).attr('data-product-id'), 10);
+    var removeUrl = 'index.php?route=account/wishlist.remove&language=' + encodeURIComponent(wishlistLanguage) + '&product_id=' + productId;
+
+    if (wishlistCustomerToken) {
+        removeUrl += '&customer_token=' + encodeURIComponent(wishlistCustomerToken);
+    }
+
     $.ajax({
-        url: $(element).attr('href'),
+        url: removeUrl,
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -88,11 +120,32 @@ $('#wishlist').on('click', '.btn-danger', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#wishlist').load('{{ list_url }}');
+                $('#wishlist').load('{{ list_url|replace({'&':'&amp;'}) }}'.replaceAll('&amp;', '&'));
+
+                if (window.ocCustomerLogged) {
+                    var $wishlistTotal = $('#wishlist-total span');
+                    var currentText = $.trim($wishlistTotal.text());
+                    var match = currentText.match(/\((\d+)\)/);
+
+                    if (match) {
+                        var nextCount = Math.max(0, parseInt(match[1], 10) - 1);
+                        var nextText = currentText.replace(/\(\d+\)/, '(' + nextCount + ')');
+
+                        if (typeof window.ocWishlistSyncTotalFromServerText === 'function') {
+                            window.ocWishlistSyncTotalFromServerText(nextText);
+                        }
+                    }
+                }
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log('Wishlist remove failed:', {
+                status: xhr.status,
+                statusText: xhr.statusText,
+                responseURL: xhr.responseURL,
+                responseText: xhr.responseText
+            });
+            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> Unable to remove wishlist item right now. Please refresh and try again. <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
     });
 });

@@ -79,13 +79,16 @@
           {% endif %}
           <form method="post" data-oc-toggle="ajax">
             <div class="btn-group">
-              <button type="submit" formaction="{{ wishlist_add }}" data-bs-toggle="tooltip" class="btn btn-light btn-lg" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
+              {% if wishlist_enabled %}
+                <button type="submit" formaction="{{ wishlist_add }}" data-bs-toggle="tooltip" class="btn btn-light btn-lg" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
+              {% endif %}
               <button type="submit" formaction="{{ compare_add }}" data-bs-toggle="tooltip" class="btn btn-light btn-lg" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
             </div>
             <input type="hidden" name="product_id" value="{{ product_id }}"/>
           </form>
           <br/>
-          <div id="product">
+          {% if cart_enabled %}
+            <div id="product">
             <form id="form-product">
               {% if options %}
                 <hr>
@@ -232,7 +235,8 @@
                 <div class="alert alert-warning"><i class="fa-solid fa-circle-info"></i> {{ text_minimum }}</div>
               {% endif %}
             </form>
-          </div>
+            </div>
+          {% endif %}
         </div>
       </div>
       <ul class="nav nav-tabs">
@@ -296,6 +300,7 @@ $('#input-subscription').on('change', function(e) {
     $('#subscription-description-' + $(element).val()).removeClass('d-none');
 });
 
+{% if cart_enabled %}
 $('#form-product').on('submit', function(e) {
     e.preventDefault();
 
@@ -353,6 +358,7 @@ $('#form-product').on('submit', function(e) {
         }
     });
 });
+{% endif %}
 
 $(document).ready(function() {
     $('.magnific-popup').magnificPopup({

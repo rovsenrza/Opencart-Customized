@@ -680,6 +680,102 @@ class Setting extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Feature Flags
+	 *
+	 * @return void
+	 */
+	public function feature(): void {
+		$this->load->language('setting/feature');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_setting'),
+			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('setting/setting.feature', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['save'] = $this->url->link('setting/setting.feature_save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
+
+		$data['config_feature_account'] = $this->getFeatureFlag('config_feature_account');
+		$data['config_feature_wishlist'] = $this->getFeatureFlag('config_feature_wishlist');
+		$data['config_feature_checkout'] = $this->getFeatureFlag('config_feature_checkout');
+		$data['config_feature_cart'] = $this->getFeatureFlag('config_feature_cart');
+		$data['config_feature_coupon'] = $this->getFeatureFlag('config_feature_coupon');
+		$data['config_feature_affiliate'] = $this->getFeatureFlag('config_feature_affiliate');
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('setting/feature', $data));
+	}
+
+	/**
+	 * Save Feature Flags
+	 *
+	 * @return void
+	 */
+	public function feature_save(): void {
+		$this->load->language('setting/feature');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'setting/setting')) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$feature_data = [];
+
+			$feature_data['config_feature_account'] = isset($this->request->post['config_feature_account']) ? (int)$this->request->post['config_feature_account'] : 0;
+			$feature_data['config_feature_wishlist'] = isset($this->request->post['config_feature_wishlist']) ? (int)$this->request->post['config_feature_wishlist'] : 0;
+			$feature_data['config_feature_checkout'] = isset($this->request->post['config_feature_checkout']) ? (int)$this->request->post['config_feature_checkout'] : 0;
+			$feature_data['config_feature_cart'] = isset($this->request->post['config_feature_cart']) ? (int)$this->request->post['config_feature_cart'] : 0;
+			$feature_data['config_feature_coupon'] = isset($this->request->post['config_feature_coupon']) ? (int)$this->request->post['config_feature_coupon'] : 0;
+			$feature_data['config_feature_affiliate'] = isset($this->request->post['config_feature_affiliate']) ? (int)$this->request->post['config_feature_affiliate'] : 0;
+
+			$this->model_setting_setting->editSetting('config_feature', $feature_data);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Get Feature Flag
+	 *
+	 * @param string $key
+	 *
+	 * @return int
+	 */
+	private function getFeatureFlag(string $key): int {
+		if (!$this->config->has($key)) {
+			return 1;
+		}
+
+		return (int)$this->config->get($key);
+	}
+
+	/**
 	 * Theme
 	 *
 	 * @return void

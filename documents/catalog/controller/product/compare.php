@@ -44,8 +44,9 @@ class Compare extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('product/compare', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['cart_add'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
-		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
+		$data['cart_enabled'] = $this->isFeatureEnabled('cart');
+		$data['cart_add'] = $data['cart_enabled'] ? $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language')) : '';
+		$data['cart'] = $data['cart_enabled'] ? $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language')) : '';
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
@@ -230,5 +231,22 @@ class Compare extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Is Feature Enabled
+	 *
+	 * @param string $feature
+	 *
+	 * @return bool
+	 */
+	private function isFeatureEnabled(string $feature): bool {
+		$key = 'config_feature_' . $feature;
+
+		if (!$this->config->has($key)) {
+			return true;
+		}
+
+		return (int)$this->config->get($key) === 1;
 	}
 }

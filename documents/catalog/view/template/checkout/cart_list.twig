@@ -90,7 +90,9 @@
   <br/>
   <div class="row">
     <div class="col"><a href="{{ continue }}" class="btn btn-light">{{ button_shopping }}</a></div>
-    <div class="col text-end"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>
+    {% if checkout %}
+      <div class="col text-end"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>
+    {% endif %}
   </div>
 {% else %}
   <h1>{{ heading_title }}</h1>

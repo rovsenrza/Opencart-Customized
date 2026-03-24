@@ -66,6 +66,7 @@ $_['text_return_reason']       = 'Return Reasons';
 $_['text_return_status']       = 'Return Statuses';
 $_['text_sale']                = 'Sales';
 $_['text_setting']             = 'Settings';
+$_['text_feature_flags']        = 'Feature Flags';
 $_['text_seo_url']             = 'SEO URL';
 $_['text_startup']             = 'Startup';
 $_['text_statistics']          = 'Statistics';

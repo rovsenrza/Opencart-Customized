@@ -28,6 +28,7 @@ $_['action_pre_action']  = [
 	'startup/currency',
 	'startup/tax',
 	'startup/application',
+	'startup/feature',
 	'startup/extension',
 	'startup/startup',
 	'startup/marketing',

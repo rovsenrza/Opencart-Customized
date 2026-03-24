@@ -17,10 +17,12 @@
           <tr>
             <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}"/></a>{% endif %}</td>
             <td><a href="{{ product.href }}">{{ product.name }}</a>
-              <form id="form-product-{{ product_row }}" action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
-                <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-                <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
-              </form>
+              {% if cart_enabled %}
+                <form id="form-product-{{ product_row }}" action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
+                  <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+                  <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
+                </form>
+              {% endif %}
             </td>
             <td>{{ product.model }}</td>
             <td class="text-end">{{ product.stock }}</td>
@@ -36,8 +38,10 @@
               {% endif %}</td>
             <td class="text-end text-nowrap" style="width: 1px;">
               <div class="d-grid">
-                <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_cart }}</button>
-                <a href="{{ product.remove }}" class="btn btn-danger" data-product-id="{{ product.product_id }}">{{ button_remove }}</a>
+                {% if cart_enabled %}
+                  <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_cart }}</button>
+                {% endif %}
+                <a href="{{ product.remove }}" class="btn btn-danger btn-wishlist-remove" data-remove-url="{{ product.remove|e('html_attr') }}" data-product-id="{{ product.product_id }}">{{ button_remove }}</a>
               </div>
             </td>
           </tr>

@@ -516,6 +516,12 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'href'     => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
+
+				$system[] = [
+					'name'     => $this->language->get('text_feature_flags'),
+					'href'     => $this->url->link('setting/setting.feature', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
 			}
 
 			// Users

@@ -132,39 +132,54 @@ class __TwigTemplate_9a51564d95afbd83eb81903ec3abc437 extends Template
         }
         // line 30
         yield "    </div>
-    <form method=\"post\" data-oc-toggle=\"ajax\" data-oc-load=\"";
+    <form method=\"post\" data-oc-toggle=\"ajax\"";
         // line 31
-        yield ($context["cart"] ?? null);
-        yield "\" data-oc-target=\"#cart\">
+        if (($context["cart_enabled"] ?? null)) {
+            yield " data-oc-load=\"";
+            yield ($context["cart"] ?? null);
+            yield "\" data-oc-target=\"#cart\"";
+        }
+        yield ">
       <div class=\"button\">
-        <button type=\"submit\" formaction=\"";
+        ";
         // line 33
-        yield ($context["cart_add"] ?? null);
-        yield "\" data-bs-toggle=\"tooltip\" title=\"";
-        yield ($context["button_cart"] ?? null);
-        yield "\"><i class=\"fa-solid fa-shopping-cart\"></i></button>
-        <button type=\"submit\" formaction=\"";
-        // line 34
-        yield ($context["wishlist_add"] ?? null);
-        yield "\" data-bs-toggle=\"tooltip\" title=\"";
-        yield ($context["button_wishlist"] ?? null);
-        yield "\" ><i class=\"fa-solid fa-heart\"></i></button>
-        <button type=\"submit\" formaction=\"";
-        // line 35
+        if (($context["cart_enabled"] ?? null)) {
+            // line 34
+            yield "          <button type=\"submit\" formaction=\"";
+            yield ($context["cart_add"] ?? null);
+            yield "\" data-bs-toggle=\"tooltip\" title=\"";
+            yield ($context["button_cart"] ?? null);
+            yield "\"><i class=\"fa-solid fa-shopping-cart\"></i></button>
+        ";
+        }
+        // line 36
+        yield "        ";
+        if (($context["wishlist_enabled"] ?? null)) {
+            // line 37
+            yield "          <button type=\"submit\" formaction=\"";
+            yield ($context["wishlist_add"] ?? null);
+            yield "\" data-bs-toggle=\"tooltip\" title=\"";
+            yield ($context["button_wishlist"] ?? null);
+            yield "\" ><i class=\"fa-solid fa-heart\"></i></button>
+        ";
+        }
+        // line 39
+        yield "        <button type=\"submit\" formaction=\"";
         yield ($context["compare_add"] ?? null);
         yield "\" data-bs-toggle=\"tooltip\" title=\"";
         yield ($context["button_compare"] ?? null);
         yield "\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i></button>
       </div>
       <input type=\"hidden\" name=\"product_id\" value=\"";
-        // line 37
+        // line 41
         yield ($context["product_id"] ?? null);
         yield "\"/> <input type=\"hidden\" name=\"quantity\" value=\"";
         yield ($context["minimum"] ?? null);
         yield "\"/>
     </form>
   </div>
-</div>";
+</div>
+";
         yield from [];
     }
 
@@ -189,7 +204,7 @@ class __TwigTemplate_9a51564d95afbd83eb81903ec3abc437 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  161 => 37,  154 => 35,  148 => 34,  142 => 33,  137 => 31,  134 => 30,  130 => 28,  124 => 27,  120 => 25,  116 => 23,  113 => 22,  109 => 21,  106 => 20,  103 => 19,  99 => 17,  91 => 15,  88 => 14,  80 => 12,  74 => 10,  72 => 9,  69 => 8,  67 => 7,  63 => 6,  57 => 5,  45 => 2,  42 => 1,);
+        return array (  175 => 41,  167 => 39,  159 => 37,  156 => 36,  148 => 34,  146 => 33,  137 => 31,  134 => 30,  130 => 28,  124 => 27,  120 => 25,  116 => 23,  113 => 22,  109 => 21,  106 => 20,  103 => 19,  99 => 17,  91 => 15,  88 => 14,  80 => 12,  74 => 10,  72 => 9,  69 => 8,  67 => 7,  63 => 6,  57 => 5,  45 => 2,  42 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -224,15 +239,20 @@ class __TwigTemplate_9a51564d95afbd83eb81903ec3abc437 extends Template
         </div>
       {% endif %}
     </div>
-    <form method=\"post\" data-oc-toggle=\"ajax\" data-oc-load=\"{{ cart }}\" data-oc-target=\"#cart\">
+    <form method=\"post\" data-oc-toggle=\"ajax\"{% if cart_enabled %} data-oc-load=\"{{ cart }}\" data-oc-target=\"#cart\"{% endif %}>
       <div class=\"button\">
-        <button type=\"submit\" formaction=\"{{ cart_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_cart }}\"><i class=\"fa-solid fa-shopping-cart\"></i></button>
-        <button type=\"submit\" formaction=\"{{ wishlist_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_wishlist }}\" ><i class=\"fa-solid fa-heart\"></i></button>
+        {% if cart_enabled %}
+          <button type=\"submit\" formaction=\"{{ cart_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_cart }}\"><i class=\"fa-solid fa-shopping-cart\"></i></button>
+        {% endif %}
+        {% if wishlist_enabled %}
+          <button type=\"submit\" formaction=\"{{ wishlist_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_wishlist }}\" ><i class=\"fa-solid fa-heart\"></i></button>
+        {% endif %}
         <button type=\"submit\" formaction=\"{{ compare_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_compare }}\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i></button>
       </div>
       <input type=\"hidden\" name=\"product_id\" value=\"{{ product_id }}\"/> <input type=\"hidden\" name=\"quantity\" value=\"{{ minimum }}\"/>
     </form>
   </div>
-</div>", "catalog/view/template/product/thumb.twig", "/Applications/MAMP/htdocs/catalog/view/template/product/thumb.twig");
+</div>
+", "catalog/view/template/product/thumb.twig", "/Applications/MAMP/htdocs/catalog/view/template/product/thumb.twig");
     }
 }

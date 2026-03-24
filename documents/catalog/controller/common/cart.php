@@ -14,6 +14,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
+		if (!$this->isFeatureEnabled('cart')) {
+			return '';
+		}
+
 		$this->load->language('common/cart');
 
 		$totals = [];
@@ -91,7 +95,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$data['remove'] = $this->url->link('common/cart.remove', 'language=' . $this->config->get('config_language'));
 
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
-		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+
+		if ($this->isFeatureEnabled('checkout')) {
+			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['checkout'] = '';
+		}
 
 		return $this->load->view('common/cart', $data);
 	}
@@ -114,6 +123,15 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/cart');
 
 		$json = [];
+
+		if (!$this->isFeatureEnabled('cart')) {
+			$json['error'] = 'Cart is disabled.';
+
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+
+			return;
+		}
 
 		if (isset($this->request->post['key'])) {
 			$key = (int)$this->request->post['key'];
@@ -139,5 +157,22 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Is Feature Enabled
+	 *
+	 * @param string $feature
+	 *
+	 * @return bool
+	 */
+	private function isFeatureEnabled(string $feature): bool {
+		$key = 'config_feature_' . $feature;
+
+		if (!$this->config->has($key)) {
+			return true;
+		}
+
+		return (int)$this->config->get($key) === 1;
 	}
 }

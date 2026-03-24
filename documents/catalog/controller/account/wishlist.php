@@ -65,8 +65,11 @@ class WishList extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['guest'] = !$this->customer->isLogged();
-		$data['guest_list'] = $this->url->link('account/wishlist.guest', 'language=' . $this->config->get('config_language'));
-		$data['list_url'] = $this->url->link('account/wishlist.list', 'language=' . $this->config->get('config_language'));
+		$token_query = isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : '';
+		$data['guest_list'] = $this->url->link('account/wishlist.guest', 'language=' . $this->config->get('config_language') . $token_query);
+		$data['list_url'] = $this->url->link('account/wishlist.list', 'language=' . $this->config->get('config_language') . $token_query);
+		$data['language_code'] = $this->config->get('config_language');
+		$data['customer_token'] = isset($this->session->data['customer_token']) ? (string)$this->session->data['customer_token'] : '';
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -110,8 +113,11 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/wishlist');
 
 		$product_ids = [];
+		$has_posted_product_ids = false;
 
 		if (isset($this->request->post['product_ids'])) {
+			$has_posted_product_ids = true;
+
 			if (is_array($this->request->post['product_ids'])) {
 				$product_ids = $this->request->post['product_ids'];
 			} elseif (is_string($this->request->post['product_ids']) && $this->request->post['product_ids']) {
@@ -123,7 +129,19 @@ class WishList extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->setOutput($this->getGuestList($this->sanitizeProductIds($product_ids)));
+		$product_ids = $this->sanitizeProductIds($product_ids);
+
+		// Keep guest session wishlist in sync with the posted localStorage payload.
+		// This prevents stale session values from resurrecting removed products.
+		if ($has_posted_product_ids) {
+			if ($product_ids) {
+				$this->session->data['wishlist'] = $product_ids;
+			} else {
+				unset($this->session->data['wishlist']);
+			}
+		}
+
+		$this->response->setOutput($this->getGuestList($product_ids));
 	}
 
 	/**
@@ -132,8 +150,9 @@ class WishList extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	protected function getList(): string {
-		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
-		$data['cart_add'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
+		$data['cart_enabled'] = $this->isFeatureEnabled('cart');
+		$data['cart'] = $data['cart_enabled'] ? $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language')) : '';
+		$data['cart_add'] = $data['cart_enabled'] ? $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language')) : '';
 
 		$data['products'] = [];
 
@@ -214,8 +233,9 @@ class WishList extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	protected function getGuestList(array $product_ids = []): string {
-		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
-		$data['cart_add'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
+		$data['cart_enabled'] = $this->isFeatureEnabled('cart');
+		$data['cart'] = $data['cart_enabled'] ? $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language')) : '';
+		$data['cart_add'] = $data['cart_enabled'] ? $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language')) : '';
 		$data['products'] = [];
 
 		$product_ids = $this->sanitizeProductIds($product_ids);
@@ -307,6 +327,23 @@ class WishList extends \Opencart\System\Engine\Controller {
 		}
 
 		return array_values(array_unique($sanitized));
+	}
+
+	/**
+	 * Is Feature Enabled
+	 *
+	 * @param string $feature
+	 *
+	 * @return bool
+	 */
+	private function isFeatureEnabled(string $feature): bool {
+		$key = 'config_feature_' . $feature;
+
+		if (!$this->config->has($key)) {
+			return true;
+		}
+
+		return (int)$this->config->get($key) === 1;
 	}
 
 	/**

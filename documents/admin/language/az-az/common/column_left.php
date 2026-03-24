@@ -66,6 +66,7 @@ $_['text_return_reason']       = 'Qayıdış Səbəbləri';
 $_['text_return_status']       = 'Qayıdış Statusları';
 $_['text_sale']                = 'Satış';
 $_['text_setting']             = 'Parametrlər';
+$_['text_feature_flags']        = 'Feature Flags';
 $_['text_seo_url']             = 'SEO URL';
 $_['text_startup']             = 'Başlanğıc';
 $_['text_statistics']          = 'Statistika';
