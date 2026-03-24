@@ -36,9 +36,10 @@ class Language extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		$language = $query->row;
+		$http_server = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
 
 		if ($language) {
-			$language['image'] = HTTP_SERVER;
+			$language['image'] = $http_server;
 
 			if (!$language['extension']) {
 				$language['image'] .= 'catalog/';
@@ -75,9 +76,10 @@ class Language extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		$language = $query->row;
+		$http_server = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
 
 		if ($language) {
-			$language['image'] = HTTP_SERVER;
+			$language['image'] = $http_server;
 
 			if (!$language['extension']) {
 				$language['image'] .= 'catalog/';
@@ -120,9 +122,10 @@ class Language extends \Opencart\System\Engine\Model {
 		}
 
 		$language_data = [];
+		$http_server = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
 
 		foreach ($results as $result) {
-			$image = HTTP_SERVER;
+			$image = $http_server;
 
 			if (!$result['extension']) {
 				$image .= 'catalog/';

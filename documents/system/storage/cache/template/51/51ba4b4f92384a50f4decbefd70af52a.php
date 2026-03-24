@@ -164,14 +164,20 @@ class __TwigTemplate_9a51564d95afbd83eb81903ec3abc437 extends Template
         ";
         }
         // line 39
-        yield "        <button type=\"submit\" formaction=\"";
-        yield ($context["compare_add"] ?? null);
-        yield "\" data-bs-toggle=\"tooltip\" title=\"";
-        yield ($context["button_compare"] ?? null);
-        yield "\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i></button>
-      </div>
+        yield "        ";
+        if (($context["compare_enabled"] ?? null)) {
+            // line 40
+            yield "          <button type=\"submit\" formaction=\"";
+            yield ($context["compare_add"] ?? null);
+            yield "\" data-bs-toggle=\"tooltip\" title=\"";
+            yield ($context["button_compare"] ?? null);
+            yield "\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i></button>
+        ";
+        }
+        // line 42
+        yield "      </div>
       <input type=\"hidden\" name=\"product_id\" value=\"";
-        // line 41
+        // line 43
         yield ($context["product_id"] ?? null);
         yield "\"/> <input type=\"hidden\" name=\"quantity\" value=\"";
         yield ($context["minimum"] ?? null);
@@ -204,7 +210,7 @@ class __TwigTemplate_9a51564d95afbd83eb81903ec3abc437 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  175 => 41,  167 => 39,  159 => 37,  156 => 36,  148 => 34,  146 => 33,  137 => 31,  134 => 30,  130 => 28,  124 => 27,  120 => 25,  116 => 23,  113 => 22,  109 => 21,  106 => 20,  103 => 19,  99 => 17,  91 => 15,  88 => 14,  80 => 12,  74 => 10,  72 => 9,  69 => 8,  67 => 7,  63 => 6,  57 => 5,  45 => 2,  42 => 1,);
+        return array (  181 => 43,  178 => 42,  170 => 40,  167 => 39,  159 => 37,  156 => 36,  148 => 34,  146 => 33,  137 => 31,  134 => 30,  130 => 28,  124 => 27,  120 => 25,  116 => 23,  113 => 22,  109 => 21,  106 => 20,  103 => 19,  99 => 17,  91 => 15,  88 => 14,  80 => 12,  74 => 10,  72 => 9,  69 => 8,  67 => 7,  63 => 6,  57 => 5,  45 => 2,  42 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -247,7 +253,9 @@ class __TwigTemplate_9a51564d95afbd83eb81903ec3abc437 extends Template
         {% if wishlist_enabled %}
           <button type=\"submit\" formaction=\"{{ wishlist_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_wishlist }}\" ><i class=\"fa-solid fa-heart\"></i></button>
         {% endif %}
-        <button type=\"submit\" formaction=\"{{ compare_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_compare }}\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i></button>
+        {% if compare_enabled %}
+          <button type=\"submit\" formaction=\"{{ compare_add }}\" data-bs-toggle=\"tooltip\" title=\"{{ button_compare }}\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i></button>
+        {% endif %}
       </div>
       <input type=\"hidden\" name=\"product_id\" value=\"{{ product_id }}\"/> <input type=\"hidden\" name=\"quantity\" value=\"{{ minimum }}\"/>
     </form>

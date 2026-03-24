@@ -26,6 +26,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			$filter = '';
 		}
 
+		$attribute_filter = $this->normalizeDynamicFilter($this->request->get['af'] ?? []);
+		$option_filter = $this->normalizeDynamicFilter($this->request->get['of'] ?? []);
+		$dynamic_filter_url = $this->buildDynamicFilterUrl($attribute_filter, $option_filter);
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -85,6 +89,8 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			$url .= $dynamic_filter_url;
+
 			$path = '';
 
 			foreach ($parts as $path_id) {
@@ -130,6 +136,8 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			$url .= $dynamic_filter_url;
+
 			// Set the last category breadcrumb
 			$data['breadcrumbs'][] = [
 				'text' => $category_info['name'],
@@ -137,6 +145,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 
 			$data['heading_title'] = $category_info['name'];
+			$data['path'] = (string)($this->request->get['path'] ?? '');
 
 			$data['text_compare'] = sprintf($this->language->get('text_compare'), isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0);
 
@@ -150,7 +159,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
-			$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
+			$data['compare_enabled'] = $this->isFeatureEnabled('compare');
+			$data['compare'] = $data['compare_enabled'] ? $this->url->link('product/compare', 'language=' . $this->config->get('config_language')) : '';
 
 			$url = '';
 
@@ -170,10 +180,19 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			$url .= $dynamic_filter_url;
+
 			$data['categories'] = [];
 
 			// Product
 			$this->load->model('catalog/product');
+
+			$data['attribute_filter'] = $attribute_filter;
+			$data['option_filter'] = $option_filter;
+			$data['dynamic_filters'] = $this->model_catalog_product->getDynamicFacetsByCategory($category_id, false);
+			$data['dynamic_filter_has_selection'] = !empty($attribute_filter) || !empty($option_filter);
+			$data['dynamic_filter_action'] = $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path']);
+			$data['dynamic_filter_clear'] = $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path']);
 
 			$results = $this->model_catalog_category->getCategories($category_id);
 
@@ -215,6 +234,8 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			$url .= $dynamic_filter_url;
+
 			// Product
 			$data['products'] = [];
 
@@ -227,6 +248,10 @@ class Category extends \Opencart\System\Engine\Controller {
 				'start'               => ($page - 1) * $limit,
 				'limit'               => $limit
 			];
+
+			if ($attribute_filter || $option_filter) {
+				$filter_data['filter_product_ids'] = $this->model_catalog_product->getFilteredProductIdsByDynamicFacets($category_id, $attribute_filter, $option_filter, false);
+			}
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
@@ -287,6 +312,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
+
+			$url .= $dynamic_filter_url;
 
 			$data['sorts'] = [];
 
@@ -364,6 +391,8 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
+			$url .= $dynamic_filter_url;
+
 			$data['limits'] = [];
 
 			$limits = array_unique([$this->config->get('config_pagination'), 25, 50, 75, 100]);
@@ -400,6 +429,8 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			$url .= $dynamic_filter_url;
+
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 			$data['pagination'] = $this->load->controller('common/pagination', [
@@ -413,17 +444,17 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			// https://developers.google.com/search/blog/2011/09/pagination-with-relnext-and-relprev
 			if ($page == 1) {
-				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path']), 'canonical');
+				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . $dynamic_filter_url), 'canonical');
 			} else {
-				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page=' . $page), 'canonical');
+				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page=' . $page . $dynamic_filter_url), 'canonical');
 			}
 
 			if ($page > 1) {
-				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . (($page - 2) ? '&page=' . ($page - 1) : '')), 'prev');
+				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . (($page - 2) ? '&page=' . ($page - 1) : '') . $dynamic_filter_url), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {
-				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page=' . ($page + 1)), 'next');
+				$this->document->addLink($this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&page=' . ($page + 1) . $dynamic_filter_url), 'next');
 			}
 
 			$data['sort'] = $sort;
@@ -433,6 +464,23 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 			$data['column_left'] = $this->load->controller('common/column_left');
+			$dynamic_filter_html = $this->load->view('product/dynamic_filter', [
+				'dynamic_filters' => $data['dynamic_filters'],
+				'dynamic_filter_action' => $data['dynamic_filter_action'],
+				'dynamic_filter_clear' => $data['dynamic_filter_clear'],
+				'dynamic_filter_has_selection' => $data['dynamic_filter_has_selection'],
+				'attribute_filter' => $data['attribute_filter'],
+				'option_filter' => $data['option_filter'],
+				'sort' => $data['sort'],
+				'order' => $data['order'],
+				'limit' => $data['limit']
+			]);
+
+			if (strpos($data['column_left'], '</aside>') !== false) {
+				$data['column_left'] = str_replace('</aside>', $dynamic_filter_html . '</aside>', $data['column_left']);
+			} else {
+				$data['column_left'] .= $dynamic_filter_html;
+			}
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
@@ -444,6 +492,84 @@ class Category extends \Opencart\System\Engine\Controller {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 
-		return null;
+			return null;
+		}
+
+		/**
+		 * @param mixed $raw_filter
+		 *
+		 * @return array<int, array<int, string>>
+		 */
+		private function normalizeDynamicFilter($raw_filter): array {
+			$output = [];
+
+			if (!is_array($raw_filter)) {
+				return $output;
+			}
+
+			foreach ($raw_filter as $group_id => $values) {
+				$group_id = (int)$group_id;
+
+				if ($group_id <= 0 || !is_array($values)) {
+					continue;
+				}
+
+				$normalized_values = [];
+
+				foreach ($values as $value) {
+					$value = trim((string)$value);
+
+					if ($value !== '') {
+						$normalized_values[] = $value;
+					}
+				}
+
+				$normalized_values = array_values(array_unique($normalized_values));
+
+				if ($normalized_values) {
+					$output[$group_id] = $normalized_values;
+				}
+			}
+
+			return $output;
+		}
+
+		/**
+		 * @param array<int, array<int, string>> $attribute_filter
+		 * @param array<int, array<int, string>> $option_filter
+		 *
+		 * @return string
+		 */
+		private function buildDynamicFilterUrl(array $attribute_filter, array $option_filter): string {
+			$url = '';
+
+			foreach ($attribute_filter as $attribute_id => $values) {
+				foreach ($values as $value) {
+					$url .= '&af[' . (int)$attribute_id . '][]=' . rawurlencode((string)$value);
+				}
+			}
+
+			foreach ($option_filter as $option_id => $values) {
+				foreach ($values as $value) {
+					$url .= '&of[' . (int)$option_id . '][]=' . rawurlencode((string)$value);
+				}
+			}
+
+			return $url;
+		}
+
+		/**
+		 * @param string $feature
+		 *
+		 * @return bool
+		 */
+		private function isFeatureEnabled(string $feature): bool {
+			$key = 'config_feature_' . $feature;
+
+			if (!$this->config->has($key)) {
+				return true;
+			}
+
+			return (int)$this->config->get($key) === 1;
+		}
 	}
-}

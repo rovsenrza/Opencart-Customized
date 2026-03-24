@@ -32,7 +32,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			if (defined('HTTP_CATALOG')) {
 				$this->config->set('config_url', HTTP_CATALOG);
 			} else {
-				$this->config->set('config_url', HTTP_SERVER);
+				$this->config->set('config_url', defined('HTTP_SERVER') ? (string)HTTP_SERVER : $hostname);
 			}
 		}
 

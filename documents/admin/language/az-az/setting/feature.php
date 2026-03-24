@@ -15,6 +15,8 @@ $_['entry_checkout']     = 'Checkout';
 $_['entry_cart']         = 'Cart';
 $_['entry_coupon']       = 'Coupon';
 $_['entry_affiliate']    = 'Affiliate';
+$_['entry_review']        = 'Review';
+$_['entry_compare']       = 'Compare';
 
 // Help
 $_['help_account']       = 'Disables customer account pages and actions (register, login, account dashboard, orders, newsletter, etc.).';
@@ -23,6 +25,8 @@ $_['help_checkout']      = 'Disables checkout routes and removes checkout links/
 $_['help_cart']          = 'Disables cart routes and add-to-cart flow globally.';
 $_['help_coupon']        = 'Disables coupon usage in storefront flow.';
 $_['help_affiliate']     = 'Disables affiliate routes and storefront affiliate links.';
+$_['help_review']         = 'Disables product review list, write actions, and review UI on product pages.';
+$_['help_compare']        = 'Disables product compare page and compare actions/buttons.';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify feature flags!';

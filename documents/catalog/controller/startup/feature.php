@@ -18,6 +18,8 @@ class Feature extends \Opencart\System\Engine\Controller {
 		$cart = $this->isEnabled('cart');
 		$coupon = $this->isEnabled('coupon');
 		$affiliate = $this->isEnabled('affiliate');
+		$review = $this->isEnabled('review');
+		$compare = $this->isEnabled('compare');
 
 		$this->config->set('config_feature_account', (int)$account);
 		$this->config->set('config_feature_wishlist', (int)$wishlist);
@@ -25,9 +27,15 @@ class Feature extends \Opencart\System\Engine\Controller {
 		$this->config->set('config_feature_cart', (int)$cart);
 		$this->config->set('config_feature_coupon', (int)$coupon);
 		$this->config->set('config_feature_affiliate', (int)$affiliate);
+		$this->config->set('config_feature_review', (int)$review);
+		$this->config->set('config_feature_compare', (int)$compare);
 
 		if (!$affiliate) {
 			$this->config->set('config_affiliate_status', 0);
+		}
+
+		if (!$review) {
+			$this->config->set('config_review_status', 0);
 		}
 
 		if (!$coupon) {
@@ -38,6 +46,10 @@ class Feature extends \Opencart\System\Engine\Controller {
 
 		if (!$wishlist) {
 			unset($this->session->data['wishlist']);
+		}
+
+		if (!$compare) {
+			unset($this->session->data['compare']);
 		}
 
 		if (!$cart) {
@@ -59,7 +71,7 @@ class Feature extends \Opencart\System\Engine\Controller {
 			$route = (string)$this->config->get('action_default');
 		}
 
-		if (!$this->isBlockedRoute($route, $account, $wishlist, $checkout, $cart, $coupon, $affiliate)) {
+		if (!$this->isBlockedRoute($route, $account, $wishlist, $checkout, $cart, $coupon, $affiliate, $review, $compare)) {
 			return null;
 		}
 
@@ -132,10 +144,12 @@ class Feature extends \Opencart\System\Engine\Controller {
 	 * @param bool   $cart
 	 * @param bool   $coupon
 	 * @param bool   $affiliate
+	 * @param bool   $review
+	 * @param bool   $compare
 	 *
 	 * @return bool
 	 */
-	private function isBlockedRoute(string $route, bool $account, bool $wishlist, bool $checkout, bool $cart, bool $coupon, bool $affiliate): bool {
+	private function isBlockedRoute(string $route, bool $account, bool $wishlist, bool $checkout, bool $cart, bool $coupon, bool $affiliate, bool $review, bool $compare): bool {
 		if (!$wishlist && $this->isRoute($route, 'account/wishlist')) {
 			return true;
 		}
@@ -157,6 +171,14 @@ class Feature extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$coupon && ($this->isRoute($route, 'extension/opencart/checkout/coupon') || $this->isRoute($route, 'extension/opencart/api/coupon'))) {
+			return true;
+		}
+
+		if (!$review && $this->isRoute($route, 'product/review')) {
+			return true;
+		}
+
+		if (!$compare && $this->isRoute($route, 'product/compare')) {
 			return true;
 		}
 
@@ -200,6 +222,7 @@ class Feature extends \Opencart\System\Engine\Controller {
 			'account/wishlist.add',
 			'account/wishlist.remove',
 			'product/compare.add',
+			'product/review.write',
 			'extension/opencart/checkout/coupon.save',
 			'extension/opencart/checkout/coupon.remove',
 			'extension/opencart/api/coupon'
@@ -220,7 +243,8 @@ class Feature extends \Opencart\System\Engine\Controller {
 			'common/cart.info',
 			'checkout/cart.list',
 			'account/wishlist.list',
-			'account/wishlist.guest'
+			'account/wishlist.guest',
+			'product/review.list'
 		];
 
 		return in_array($route, $html_routes, true);

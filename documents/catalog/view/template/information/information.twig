@@ -7,8 +7,23 @@
   </ul>
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
-      <h1>{{ heading_title }}</h1>
-      {{ description }}{{ content_bottom }}</div>
+      {% set page_title = heading_title|lower %}
+      {% if page_title in ['haqqimizda', 'haqqımızda', 'about us'] %}
+        <section class="about-hero mb-4 p-4 p-lg-5 rounded-3" style="background: linear-gradient(135deg, #e8f6ff 0%, #f7fbff 100%); border: 1px solid #d8ebf8;">
+          <h1 class="mb-3">{{ heading_title }}</h1>
+          <p class="mb-0 text-muted">Brendimiz, dəyərlərimiz və gördüyümüz iş barədə qısa məlumat.</p>
+        </section>
+
+        <section class="about-content card border-0 shadow-sm">
+          <div class="card-body p-4 p-lg-5">
+            {{ description }}
+          </div>
+        </section>
+      {% else %}
+        <h1>{{ heading_title }}</h1>
+        {{ description }}
+      {% endif %}
+      {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
 {{ footer }}

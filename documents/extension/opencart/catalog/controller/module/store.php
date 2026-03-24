@@ -27,11 +27,12 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = $this->config->get('config_store_id');
 
 			$data['stores'] = [];
+			$http_server = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
 
 			$data['stores'][] = [
 				'store_id' => 0,
 				'name'     => $this->language->get('text_default'),
-				'url'      => HTTP_SERVER . 'index.php?route=common/home&session_id=' . $this->session->getId()
+				'url'      => $http_server . 'index.php?route=common/home&session_id=' . $this->session->getId()
 			];
 
 			$this->load->model('setting/store');

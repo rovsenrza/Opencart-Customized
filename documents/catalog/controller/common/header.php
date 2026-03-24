@@ -69,6 +69,7 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		$account_enabled = $this->isFeatureEnabled('account');
 		$wishlist_enabled = $this->isFeatureEnabled('wishlist');
+		$compare_enabled = $this->isFeatureEnabled('compare');
 		$cart_enabled = $this->isFeatureEnabled('cart');
 		$checkout_enabled = $cart_enabled && $this->isFeatureEnabled('checkout');
 
@@ -94,13 +95,14 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['customer_logged'] = $this->customer->isLogged();
 		$data['account_enabled'] = $account_enabled;
 		$data['wishlist_enabled'] = $wishlist_enabled;
+		$data['compare_enabled'] = $compare_enabled;
 		$data['cart_enabled'] = $cart_enabled;
 		$data['checkout_enabled'] = $checkout_enabled;
 		$data['search_col_class'] = $cart_enabled ? 'col-md-5' : 'col-md-9 col-lg-8';
 
 		$data['home'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 		$data['wishlist'] = $wishlist_enabled ? $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : '')) : '';
-		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
+		$data['compare'] = $compare_enabled ? $this->url->link('product/compare', 'language=' . $this->config->get('config_language')) : '';
 		$data['logged'] = $this->customer->isLogged();
 		$data['register'] = '';
 		$data['login'] = '';

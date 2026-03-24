@@ -249,6 +249,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 			$data['cart_enabled'] = $this->isFeatureEnabled('cart');
 			$data['wishlist_enabled'] = $this->isFeatureEnabled('wishlist');
+			$data['compare_enabled'] = $this->isFeatureEnabled('compare');
 
 			$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
@@ -308,7 +309,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['review'] = $this->load->controller('product/review');
 
 			$data['wishlist_add'] = $data['wishlist_enabled'] ? $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language')) : '';
-			$data['compare_add'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
+			$data['compare_add'] = $data['compare_enabled'] ? $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language')) : '';
 
 			// Image
 			$this->load->model('tool/image');

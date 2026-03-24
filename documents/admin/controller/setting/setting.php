@@ -715,6 +715,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_feature_cart'] = $this->getFeatureFlag('config_feature_cart');
 		$data['config_feature_coupon'] = $this->getFeatureFlag('config_feature_coupon');
 		$data['config_feature_affiliate'] = $this->getFeatureFlag('config_feature_affiliate');
+		$data['config_feature_review'] = $this->getFeatureFlag('config_feature_review');
+		$data['config_feature_compare'] = $this->getFeatureFlag('config_feature_compare');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -750,6 +752,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$feature_data['config_feature_cart'] = isset($this->request->post['config_feature_cart']) ? (int)$this->request->post['config_feature_cart'] : 0;
 			$feature_data['config_feature_coupon'] = isset($this->request->post['config_feature_coupon']) ? (int)$this->request->post['config_feature_coupon'] : 0;
 			$feature_data['config_feature_affiliate'] = isset($this->request->post['config_feature_affiliate']) ? (int)$this->request->post['config_feature_affiliate'] : 0;
+			$feature_data['config_feature_review'] = isset($this->request->post['config_feature_review']) ? (int)$this->request->post['config_feature_review'] : 0;
+			$feature_data['config_feature_compare'] = isset($this->request->post['config_feature_compare']) ? (int)$this->request->post['config_feature_compare'] : 0;
 
 			$this->model_setting_setting->editSetting('config_feature', $feature_data);
 

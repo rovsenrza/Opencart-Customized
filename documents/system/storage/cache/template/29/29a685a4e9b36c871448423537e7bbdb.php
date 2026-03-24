@@ -123,6 +123,7 @@ class __TwigTemplate_f0fe5cc111270ed2fa2e4c196e98c34c extends Template
         }
         // line 33
         yield "</section>
+
 ";
         yield from [];
     }
@@ -186,6 +187,10 @@ class __TwigTemplate_f0fe5cc111270ed2fa2e4c196e98c34c extends Template
     </div>
   {% endif %}
 </section>
-", "catalog/view/template/sections/bloglar.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/bloglar.twig");
+
+{#
+array elementlerini gormek ucun ucun:
+<pre>{{ custom_fields|json_encode }}</pre>
+#}", "catalog/view/template/sections/bloglar.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/bloglar.twig");
     }
 }

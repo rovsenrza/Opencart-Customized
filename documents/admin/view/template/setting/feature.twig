@@ -80,6 +80,26 @@
               <div class="form-text">{{ help_affiliate }}</div>
             </div>
           </div>
+          <div class="row mb-3">
+            <label for="input-feature-review" class="col-sm-3 col-form-label">{{ entry_review }}</label>
+            <div class="col-sm-9">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="config_feature_review" value="0"/>
+                <input type="checkbox" name="config_feature_review" value="1" id="input-feature-review" class="form-check-input"{% if config_feature_review %} checked{% endif %}/>
+              </div>
+              <div class="form-text">{{ help_review }}</div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-feature-compare" class="col-sm-3 col-form-label">{{ entry_compare }}</label>
+            <div class="col-sm-9">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="config_feature_compare" value="0"/>
+                <input type="checkbox" name="config_feature_compare" value="1" id="input-feature-compare" class="form-check-input"{% if config_feature_compare %} checked{% endif %}/>
+              </div>
+              <div class="form-text">{{ help_compare }}</div>
+            </div>
+          </div>
         </form>
       </div>
     </div>

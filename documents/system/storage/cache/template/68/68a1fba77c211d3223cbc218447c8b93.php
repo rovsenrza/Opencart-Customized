@@ -82,6 +82,7 @@ class __TwigTemplate_2597409e21115e079125f7d055e41fae extends Template
         // line 20
         yield "  </div>
 </section>
+
 ";
         yield from [];
     }
@@ -133,6 +134,10 @@ class __TwigTemplate_2597409e21115e079125f7d055e41fae extends Template
     {% endif %}
   </div>
 </section>
-", "catalog/view/template/sections/haqqimizda.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/haqqimizda.twig");
+
+{#
+array elementlerini gormek ucun ucun:
+<pre>{{ custom_fields|json_encode }}</pre>
+#}", "catalog/view/template/sections/haqqimizda.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/haqqimizda.twig");
     }
 }

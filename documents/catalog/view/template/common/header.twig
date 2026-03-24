@@ -73,7 +73,9 @@
             {% if wishlist_enabled %}
               <li class="list-inline-item"><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}" data-wishlist-template="{{ text_wishlist_template|e('html_attr') }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist }}</span></a></li>
             {% endif %}
-            <li class="list-inline-item"><a href="{{ compare }}" title="{{ text_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i> <span class="d-none d-lg-inline">{{ text_compare }}</span></a></li>
+            {% if compare_enabled %}
+              <li class="list-inline-item"><a href="{{ compare }}" title="{{ text_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i> <span class="d-none d-lg-inline">{{ text_compare }}</span></a></li>
+            {% endif %}
             {% if cart_enabled %}
               <li class="list-inline-item"><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
             {% endif %}

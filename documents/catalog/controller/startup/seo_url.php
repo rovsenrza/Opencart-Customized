@@ -186,6 +186,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			if ($paths || $route == $this->config->get('action_default')) {
 				unset($query['route']);
+			} elseif ($route == 'product/search') {
+				$url .= '/search';
+				unset($query['route']);
 			} elseif ($route) {
 				$url .= '/' . trim($route, '/');
 				unset($query['route']);
@@ -314,6 +317,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	 */
 	private function findRouteFromParts(array $parts): string {
 		$route = implode('/', $parts);
+
+		if ($route == 'search') {
+			return 'product/search';
+		}
 
 		if ($this->routeExists($route)) {
 			return $route;

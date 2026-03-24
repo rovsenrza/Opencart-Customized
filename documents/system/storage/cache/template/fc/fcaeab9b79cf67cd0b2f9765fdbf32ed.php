@@ -280,17 +280,22 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
             ";
         }
         // line 76
-        yield "            <li class=\"list-inline-item\"><a href=\"";
-        yield ($context["compare"] ?? null);
-        yield "\" title=\"";
-        yield ($context["text_compare"] ?? null);
-        yield "\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i> <span class=\"d-none d-lg-inline\">";
-        yield ($context["text_compare"] ?? null);
-        yield "</span></a></li>
+        yield "            ";
+        if (($context["compare_enabled"] ?? null)) {
+            // line 77
+            yield "              <li class=\"list-inline-item\"><a href=\"";
+            yield ($context["compare"] ?? null);
+            yield "\" title=\"";
+            yield ($context["text_compare"] ?? null);
+            yield "\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i> <span class=\"d-none d-lg-inline\">";
+            yield ($context["text_compare"] ?? null);
+            yield "</span></a></li>
             ";
-        // line 77
+        }
+        // line 79
+        yield "            ";
         if (($context["cart_enabled"] ?? null)) {
-            // line 78
+            // line 80
             yield "              <li class=\"list-inline-item\"><a href=\"";
             yield ($context["shopping_cart"] ?? null);
             yield "\" title=\"";
@@ -300,10 +305,10 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
             yield "</span></a></li>
             ";
         }
-        // line 80
+        // line 82
         yield "            ";
         if (($context["checkout_enabled"] ?? null)) {
-            // line 81
+            // line 83
             yield "              <li class=\"list-inline-item\"><a href=\"";
             yield ($context["checkout"] ?? null);
             yield "\" title=\"";
@@ -313,7 +318,7 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
             yield "</span></a></li>
             ";
         }
-        // line 83
+        // line 85
         yield "          </ul>
         </div>
       </div>
@@ -325,9 +330,9 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
         <div class=\"col-md-3 col-lg-4\">
           <div id=\"logo\">
             ";
-        // line 93
+        // line 95
         if (($context["logo"] ?? null)) {
-            // line 94
+            // line 96
             yield "              <a href=\"";
             yield ($context["home"] ?? null);
             yield "\"><img src=\"";
@@ -339,7 +344,7 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
             yield "\" class=\"img-fluid\"/></a>
             ";
         } else {
-            // line 96
+            // line 98
             yield "              <h1><a href=\"";
             yield ($context["home"] ?? null);
             yield "\">";
@@ -347,31 +352,31 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
             yield "</a></h1>
             ";
         }
-        // line 98
+        // line 100
         yield "          </div>
         </div>
         <div class=\"";
-        // line 100
+        // line 102
         yield ($context["search_col_class"] ?? null);
         yield "\">";
         yield ($context["search"] ?? null);
         yield "</div>
         ";
-        // line 101
+        // line 103
         if (($context["cart_enabled"] ?? null)) {
-            // line 102
+            // line 104
             yield "          <div id=\"cart\" class=\"col-md-4 col-lg-3 mb-2\">";
             yield ($context["cart"] ?? null);
             yield "</div>
         ";
         }
-        // line 104
+        // line 106
         yield "      </div>
     </div>
   </header>
   <main>
     ";
-        // line 108
+        // line 110
         yield ($context["menu"] ?? null);
         yield "
 ";
@@ -399,7 +404,7 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  375 => 108,  369 => 104,  363 => 102,  361 => 101,  355 => 100,  351 => 98,  343 => 96,  331 => 94,  329 => 93,  317 => 83,  307 => 81,  304 => 80,  294 => 78,  292 => 77,  283 => 76,  271 => 74,  268 => 73,  262 => 69,  255 => 67,  249 => 66,  243 => 65,  237 => 64,  230 => 63,  223 => 61,  216 => 60,  214 => 59,  209 => 57,  205 => 55,  203 => 54,  197 => 53,  189 => 48,  185 => 47,  174 => 38,  165 => 36,  160 => 35,  149 => 33,  144 => 32,  135 => 30,  130 => 29,  117 => 27,  112 => 26,  106 => 24,  104 => 23,  99 => 21,  95 => 20,  91 => 19,  86 => 17,  80 => 15,  74 => 13,  71 => 12,  65 => 10,  63 => 9,  59 => 8,  55 => 7,  45 => 2,  42 => 1,);
+        return array (  380 => 110,  374 => 106,  368 => 104,  366 => 103,  360 => 102,  356 => 100,  348 => 98,  336 => 96,  334 => 95,  322 => 85,  312 => 83,  309 => 82,  299 => 80,  296 => 79,  286 => 77,  283 => 76,  271 => 74,  268 => 73,  262 => 69,  255 => 67,  249 => 66,  243 => 65,  237 => 64,  230 => 63,  223 => 61,  216 => 60,  214 => 59,  209 => 57,  205 => 55,  203 => 54,  197 => 53,  189 => 48,  185 => 47,  174 => 38,  165 => 36,  160 => 35,  149 => 33,  144 => 32,  135 => 30,  130 => 29,  117 => 27,  112 => 26,  106 => 24,  104 => 23,  99 => 21,  95 => 20,  91 => 19,  86 => 17,  80 => 15,  74 => 13,  71 => 12,  65 => 10,  63 => 9,  59 => 8,  55 => 7,  45 => 2,  42 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -479,7 +484,9 @@ class __TwigTemplate_4dc9f38746f4d20ffa5821c1ba661ad9 extends Template
             {% if wishlist_enabled %}
               <li class=\"list-inline-item\"><a href=\"{{ wishlist }}\" id=\"wishlist-total\" title=\"{{ text_wishlist }}\" data-wishlist-template=\"{{ text_wishlist_template|e('html_attr') }}\"><i class=\"fa-solid fa-heart\"></i> <span class=\"d-none d-lg-inline\">{{ text_wishlist }}</span></a></li>
             {% endif %}
-            <li class=\"list-inline-item\"><a href=\"{{ compare }}\" title=\"{{ text_compare }}\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i> <span class=\"d-none d-lg-inline\">{{ text_compare }}</span></a></li>
+            {% if compare_enabled %}
+              <li class=\"list-inline-item\"><a href=\"{{ compare }}\" title=\"{{ text_compare }}\"><i class=\"fa-solid fa-arrow-right-arrow-left\"></i> <span class=\"d-none d-lg-inline\">{{ text_compare }}</span></a></li>
+            {% endif %}
             {% if cart_enabled %}
               <li class=\"list-inline-item\"><a href=\"{{ shopping_cart }}\" title=\"{{ text_shopping_cart }}\"><i class=\"fa-solid fa-cart-shopping\"></i> <span class=\"d-none d-lg-inline\">{{ text_shopping_cart }}</span></a></li>
             {% endif %}

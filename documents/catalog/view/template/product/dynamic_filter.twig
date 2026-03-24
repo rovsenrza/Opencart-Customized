@@ -1,0 +1,48 @@
+{% if dynamic_filters.attributes or dynamic_filters.options %}
+  <form action="{{ dynamic_filter_action }}" method="get" class="card mt-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Filters</h5>
+        {% if dynamic_filter_has_selection %}
+          <a href="{{ dynamic_filter_clear }}" class="btn btn-sm btn-outline-secondary">Clear</a>
+        {% endif %}
+      </div>
+
+      {% if sort %}
+        <input type="hidden" name="sort" value="{{ sort }}"/>
+      {% endif %}
+      {% if order %}
+        <input type="hidden" name="order" value="{{ order }}"/>
+      {% endif %}
+      {% if limit %}
+        <input type="hidden" name="limit" value="{{ limit }}"/>
+      {% endif %}
+
+      {% for attribute in dynamic_filters.attributes %}
+        <div class="mb-3">
+          <strong class="d-block mb-2">{{ attribute.name }}</strong>
+          {% for value in attribute.values %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="af-side-{{ attribute.id }}-{{ loop.index }}" name="af[{{ attribute.id }}][]" value="{{ value.value }}"{% if value.value in (attribute_filter[attribute.id]|default([])) %} checked{% endif %}>
+              <label class="form-check-label" for="af-side-{{ attribute.id }}-{{ loop.index }}">{{ value.label }} ({{ value.total }})</label>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      {% for option in dynamic_filters.options %}
+        <div class="mb-3">
+          <strong class="d-block mb-2">{{ option.name }}</strong>
+          {% for value in option.values %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="of-side-{{ option.id }}-{{ loop.index }}" name="of[{{ option.id }}][]" value="{{ value.value }}"{% if value.value in (option_filter[option.id]|default([])) %} checked{% endif %}>
+              <label class="form-check-label" for="of-side-{{ option.id }}-{{ loop.index }}">{{ value.label }} ({{ value.total }})</label>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+    </div>
+  </form>
+{% endif %}

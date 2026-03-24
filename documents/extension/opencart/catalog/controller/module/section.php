@@ -492,7 +492,15 @@ class Section extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
-		$server = (!empty($this->request->server['HTTPS']) && $this->request->server['HTTPS'] !== 'off') ? HTTPS_SERVER : HTTP_SERVER;
+		$is_https_request = !empty($this->request->server['HTTPS']) && $this->request->server['HTTPS'] !== 'off';
+		$http_server = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
+		$https_server = defined('HTTPS_SERVER') ? (string)HTTPS_SERVER : (string)$this->config->get('config_ssl');
+
+		if ($https_server === '') {
+			$https_server = $http_server;
+		}
+
+		$server = $is_https_request ? $https_server : $http_server;
 
 		return $server . 'image/' . str_replace(' ', '%20', $image);
 	}

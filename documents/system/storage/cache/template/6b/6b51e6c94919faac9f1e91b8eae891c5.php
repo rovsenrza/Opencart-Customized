@@ -236,6 +236,7 @@ class __TwigTemplate_bbb3dd0f531a3fac8629784c7b234467 extends Template
         }
         // line 138
         yield "</section>
+
 ";
         yield from [];
     }
@@ -404,6 +405,11 @@ class __TwigTemplate_bbb3dd0f531a3fac8629784c7b234467 extends Template
     </script>
   {% endif %}
 </section>
+
+{#
+array elementlerini gormek ucun ucun:
+<pre>{{ custom_fields|json_encode }}</pre>
+#}
 ", "catalog/view/template/sections/banner.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/banner.twig");
     }
 }

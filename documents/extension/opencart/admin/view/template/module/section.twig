@@ -390,7 +390,7 @@
         html += '</tr></thead><tbody>';
 
         state.items.forEach(function(item, index) {
-            var rowStyle = ((state.sectionType === 'homepage_slider' || state.sectionType === 'partners' || state.sectionType === 'cta') && index === 0) ? ' style="pointer-events: none; opacity: 0.5;"' : '';
+            var rowStyle = ((state.sectionType === 'homepage_slider' || state.sectionType === 'partners' || state.sectionType === 'cta' || state.sectionType === 'advantages') && index === 0) ? ' style="pointer-events: none; opacity: 0.5;"' : '';
 
             html += '<tr' + rowStyle + '>';
 

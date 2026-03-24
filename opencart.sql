@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost:8889
--- Üretim Zamanı: 23 Mar 2026, 13:35:50
+-- Üretim Zamanı: 24 Mar 2026, 21:25:45
 -- Sunucu sürümü: 8.0.44
 -- PHP Sürümü: 8.3.30
 
@@ -1602,7 +1602,8 @@ CREATE TABLE `oc_coupon` (
 INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`) VALUES
 (1, '-10% Discount', '2222', 'P', 10.0000, 0, 0, 0.0000, '2014-01-01', '2020-01-01', 10, 10, 0, '2009-01-27 13:55:03'),
 (2, 'Free Shipping', '3333', 'P', 0.0000, 0, 1, 100.0000, '2014-01-01', '2014-02-01', 10, 10, 0, '2009-03-14 21:13:53'),
-(3, '-10.00 Discount', '1111', 'F', 10.0000, 0, 0, 10.0000, '2014-01-01', '2020-01-01', 100000, 10000, 0, '2009-03-14 21:15:18');
+(3, '-10.00 Discount', '1111', 'F', 10.0000, 0, 0, 10.0000, '2014-01-01', '2020-01-01', 100000, 10000, 0, '2009-03-14 21:15:18'),
+(4, 'test kupon', 'kupon10', 'P', 10.0000, 0, 0, 10.0000, '2026-03-24', '2026-04-26', 1, 1, 1, '2026-03-24 09:12:34');
 
 -- --------------------------------------------------------
 
@@ -1691,14 +1692,14 @@ CREATE TABLE `oc_currency` (
 --
 
 INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`) VALUES
-(1, 'Pound Sterling', 'GBP', '£', '', 2, 0.61250001, 1, '2014-09-25 14:40:00'),
-(2, 'US Dollar', 'USD', '$', '', 2, 1.00000000, 1, '2014-09-25 14:40:00'),
-(3, 'Euro', 'EUR', '', '€', 2, 0.78460002, 1, '2014-09-25 14:40:00'),
-(4, 'Hong Kong Dollar', 'HKD', 'HK$', '', 2, 7.82224000, 0, '2018-02-16 12:00:00'),
-(5, 'Indian Rupee', 'INR', '₹', '', 2, 64.40000000, 0, '2018-02-16 12:00:00'),
+(1, 'Pound Sterling', 'GBP', '£', '', 2, 0.74784825, 1, '2026-03-24 21:01:58'),
+(2, 'US Dollar', 'USD', '$', '', 2, 1.00000000, 1, '2026-03-24 21:01:58'),
+(3, 'Euro', 'EUR', '', '€', 2, 0.86415486, 1, '2026-03-24 21:01:58'),
+(4, 'Hong Kong Dollar', 'HKD', 'HK$', '', 2, 7.82708261, 0, '2026-03-24 21:01:58'),
+(5, 'Indian Rupee', 'INR', '₹', '', 2, 93.84462496, 0, '2026-03-24 21:01:58'),
 (6, 'Russian Ruble', 'RUB', '', '₽', 2, 56.40360000, 0, '2018-02-16 12:00:00'),
-(7, 'Chinese Yuan Renminbi', 'CNY', '¥', '', 2, 6.34510000, 0, '2018-02-16 12:00:00'),
-(8, 'Australian Dollar', 'AUD', '$', '', 2, 1.26544000, 0, '2018-02-16 12:00:00');
+(7, 'Chinese Yuan Renminbi', 'CNY', '¥', '', 2, 6.89336329, 0, '2026-03-24 21:01:58'),
+(8, 'Australian Dollar', 'AUD', '$', '', 2, 1.43899067, 0, '2026-03-24 21:01:58');
 
 -- --------------------------------------------------------
 
@@ -1724,6 +1725,13 @@ CREATE TABLE `oc_customer` (
   `commenter` tinyint(1) DEFAULT '0',
   `date_added` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Tablo döküm verisi `oc_customer`
+--
+
+INSERT INTO `oc_customer` (`customer_id`, `customer_group_id`, `store_id`, `language_id`, `firstname`, `lastname`, `email`, `telephone`, `password`, `custom_field`, `newsletter`, `ip`, `status`, `safe`, `commenter`, `date_added`) VALUES
+(1, 1, 0, 1, 'rovsen', 'rovsen', 'rovsen@mail.ru', '', '$2y$10$f/yOtVNevryWKNSyyRrPh.3HiHWQb.ASbz.wb6gotDkMRXQXQENXq', '[]', 0, '::1', 1, 0, 0, '2026-03-24 10:49:06');
 
 -- --------------------------------------------------------
 
@@ -1886,6 +1894,16 @@ CREATE TABLE `oc_customer_ip` (
   `country` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_added` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Tablo döküm verisi `oc_customer_ip`
+--
+
+INSERT INTO `oc_customer_ip` (`customer_ip_id`, `customer_id`, `store_id`, `ip`, `country`, `date_added`) VALUES
+(1, 1, 0, '::1', '', '2026-03-24 10:49:06'),
+(2, 1, 0, '::1', '', '2026-03-24 10:56:33'),
+(3, 1, 0, '::1', '', '2026-03-24 11:07:23'),
+(4, 1, 0, '::1', '', '2026-03-24 11:08:25');
 
 -- --------------------------------------------------------
 
@@ -3029,7 +3047,8 @@ INSERT INTO `oc_information` (`information_id`, `sort_order`, `status`) VALUES
 (1, 3, 1),
 (2, 1, 1),
 (3, 4, 1),
-(4, 2, 1);
+(4, 2, 1),
+(5, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -3059,7 +3078,9 @@ INSERT INTO `oc_information_description` (`information_id`, `language_id`, `titl
 (3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
 (3, 4, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
 (4, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', ''),
-(4, 4, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', '');
+(4, 4, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', 'Delivery Information', '', ''),
+(5, 1, 'haqqimizda', '&lt;p&gt;text&lt;/p&gt;', 'haqqimizda', 'haqqimizda', 'haqqimizda'),
+(5, 4, 'haqqimizda', '&lt;p&gt;text&lt;/p&gt;', 'haqqimizda', 'haqqimizda', 'haqqimizda');
 
 -- --------------------------------------------------------
 
@@ -3092,7 +3113,8 @@ INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
 (1, 0),
 (2, 0),
 (3, 0),
-(4, 0);
+(4, 0),
+(5, 0);
 
 -- --------------------------------------------------------
 
@@ -4682,7 +4704,9 @@ INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `key`, `value
 (254, 0, 4, 'article_id', '2', 'article2', 0),
 (255, 0, 1, 'article_id', '2', 'article2', 0),
 (256, 0, 4, 'article_id', '3', 'article3', 0),
-(257, 0, 1, 'article_id', '3', 'article3', 0);
+(257, 0, 1, 'article_id', '3', 'article3', 0),
+(258, 0, 4, 'information_id', '5', 'haqqimizda', 0),
+(259, 0, 1, 'information_id', '5', 'haqqimizda', 0);
 
 -- --------------------------------------------------------
 
@@ -4701,8 +4725,24 @@ CREATE TABLE `oc_session` (
 --
 
 INSERT INTO `oc_session` (`session_id`, `data`, `expire`) VALUES
-('242ac9de8bd50bae69fe5bc94d', '{\"user_id\":\"1\",\"user_token\":\"8d18f7771ce93aba0d00692ad7207dc6\"}', '2026-03-24 13:26:37'),
-('f23949e11105fb9457b11883a0', '{\"currency\":\"USD\",\"upload_token\":\"6df665915ce34c130bd1fd4f98f99b9c\",\"review_token\":\"2f505c80eaea0046893ddd2d2e397a72\",\"wishlist\":[28]}', '2026-03-24 13:27:29');
+('1779473f6b78958932338b2446', '{\"currency\":\"USD\"}', '2026-03-25 21:15:04'),
+('1f59891ae72f78c120b1f9c60b', '{\"currency\":\"USD\"}', '2026-03-25 21:13:29'),
+('242ac9de8bd50bae69fe5bc94d', '{\"user_id\":\"1\",\"user_token\":\"8d18f7771ce93aba0d00692ad7207dc6\"}', '2026-03-25 21:19:52'),
+('2e0f05390f57173d7bafeef108', '{\"currency\":\"USD\"}', '2026-03-25 21:15:04'),
+('48af9d9b9696f5d0191c43d59f', '{\"currency\":\"USD\"}', '2026-03-25 21:02:48'),
+('4d73331be039131ce3e5eb8dc2', '{\"currency\":\"USD\"}', '2026-03-25 21:13:25'),
+('6a8ba3a39e9fc3d85630997e61', '{\"currency\":\"USD\"}', '2026-03-25 21:13:25'),
+('71743aceaa6994c0398cbac4cd', '{\"currency\":\"USD\"}', '2026-03-25 21:14:59'),
+('7bd8c09d4ef68c16fd817d638c', '{\"currency\":\"USD\"}', '2026-03-25 21:13:33'),
+('82b68ffb175fedd71eb397fbfb', '{\"currency\":\"USD\"}', '2026-03-25 21:00:00'),
+('9938f7c8b424722dcb5ffde060', '{\"currency\":\"USD\"}', '2026-03-25 21:14:01'),
+('9b9a237689d04378402db08bf5', '{\"currency\":\"USD\"}', '2026-03-25 21:17:17'),
+('a2f353979f95994b36aa9494ec', '{\"currency\":\"USD\"}', '2026-03-25 21:11:33'),
+('a33a7fe937d720539fb0fb1983', '{\"currency\":\"USD\"}', '2026-03-25 21:14:59'),
+('cbfc8d9d4dce54135d1ab179c4', '{\"currency\":\"USD\"}', '2026-03-25 20:59:39'),
+('d23f73f5dfc5bd0ef3db813498', '{\"currency\":\"USD\"}', '2026-03-25 21:14:11'),
+('f23949e11105fb9457b11883a0', '{\"currency\":\"USD\",\"upload_token\":\"9f45816be51952b524c0ebe0adc5bd6a\",\"review_token\":\"cae0dbab8ccce7fb8620292c49f735f5\"}', '2026-03-25 21:24:30'),
+('f991077b40cf312bc55e329acb', '{\"currency\":\"USD\"}', '2026-03-25 21:00:04');
 
 -- --------------------------------------------------------
 
@@ -4724,134 +4764,6 @@ CREATE TABLE `oc_setting` (
 --
 
 INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `serialized`) VALUES
-(1, 0, 'config', 'config_shared', '0', 0),
-(2, 0, 'config', 'config_fraud_detection', '0', 0),
-(3, 0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\",\"meta_description\":\"\",\"meta_keyword\":\"\"}}', 1),
-(4, 0, 'config', 'config_session_expire', '86400', 0),
-(5, 0, 'config', 'config_session_samesite', 'Strict', 0),
-(6, 0, 'config', 'config_theme', 'basic', 0),
-(7, 0, 'config', 'config_layout_id', '4', 0),
-(8, 0, 'config', 'config_country_id', '222', 0),
-(9, 0, 'config', 'config_zone_id', '3563', 0),
-(10, 0, 'config', 'config_timezone', 'UTC', 0),
-(11, 0, 'config', 'config_language_catalog', 'en-gb', 0),
-(12, 0, 'config', 'config_language_admin', 'en-gb', 0),
-(13, 0, 'config', 'config_currency', 'USD', 0),
-(14, 0, 'config', 'config_currency_auto', '1', 0),
-(15, 0, 'config', 'config_currency_engine', 'ecb', 0),
-(16, 0, 'config', 'config_length_class_id', '1', 0),
-(17, 0, 'config', 'config_weight_class_id', '1', 0),
-(18, 0, 'config', 'config_product_description_length', '100', 0),
-(19, 0, 'config', 'config_article_description_length', '600', 0),
-(20, 0, 'config', 'config_pagination', '10', 0),
-(21, 0, 'config', 'config_pagination_admin', '10', 0),
-(22, 0, 'config', 'config_autocomplete_limit', '5', 0),
-(23, 0, 'config', 'config_product_count', '1', 0),
-(24, 0, 'config', 'config_review_status', '1', 0),
-(25, 0, 'config', 'config_review_guest', '1', 0),
-(26, 0, 'config', 'config_cookie_id', '0', 0),
-(27, 0, 'config', 'config_gdpr_id', '0', 0),
-(28, 0, 'config', 'config_gdpr_limit', '180', 0),
-(29, 0, 'config', 'config_tax', '1', 0),
-(30, 0, 'config', 'config_tax_default', 'shipping', 0),
-(31, 0, 'config', 'config_tax_customer', 'shipping', 0),
-(32, 0, 'config', 'config_customer_online', '0', 0),
-(33, 0, 'config', 'config_customer_online_expire', '1', 0),
-(34, 0, 'config', 'config_customer_activity', '0', 0),
-(35, 0, 'config', 'config_customer_search', '0', 0),
-(36, 0, 'config', 'config_customer_group_id', '1', 0),
-(37, 0, 'config', 'config_customer_group_display', '[\"1\"]', 1),
-(38, 0, 'config', 'config_customer_price', '0', 0),
-(39, 0, 'config', 'config_address_format_id', '1', 0),
-(40, 0, 'config', 'config_account_id', '3', 0),
-(41, 0, 'config', 'config_invoice_prefix', 'INV-2026-00', 0),
-(43, 0, 'config', 'config_cart_weight', '1', 0),
-(44, 0, 'config', 'config_checkout_guest', '1', 0),
-(45, 0, 'config', 'config_checkout_id', '0', 0),
-(46, 0, 'config', 'config_order_status_id', '1', 0),
-(47, 0, 'config', 'config_processing_status', '[\"5\",\"1\",\"2\",\"12\",\"3\"]', 1),
-(48, 0, 'config', 'config_complete_status', '[\"5\",\"3\"]', 1),
-(49, 0, 'config', 'config_void_status_id', '16', 0),
-(50, 0, 'config', 'config_fraud_status_id', '8', 0),
-(51, 0, 'config', 'config_subscription_status_id', '1', 0),
-(52, 0, 'config', 'config_subscription_active_status_id', '2', 0),
-(53, 0, 'config', 'config_subscription_expired_status_id', '3', 0),
-(54, 0, 'config', 'config_subscription_suspended_status_id', '4', 0),
-(55, 0, 'config', 'config_subscription_canceled_status_id', '5', 0),
-(56, 0, 'config', 'config_subscription_failed_status_id', '6', 0),
-(57, 0, 'config', 'config_subscription_denied_status_id', '7', 0),
-(58, 0, 'config', 'config_stock_display', '0', 0),
-(59, 0, 'config', 'config_stock_warning', '0', 0),
-(60, 0, 'config', 'config_stock_checkout', '0', 0),
-(61, 0, 'config', 'config_stock_status_id', '7', 0),
-(62, 0, 'config', 'config_affiliate_status', '1', 0),
-(63, 0, 'config', 'config_affiliate_approval', '0', 0),
-(64, 0, 'config', 'config_affiliate_auto', '0', 0),
-(65, 0, 'config', 'config_affiliate_commission', '5', 0),
-(66, 0, 'config', 'config_affiliate_id', '4', 0),
-(67, 0, 'config', 'config_return_id', '0', 0),
-(68, 0, 'config', 'config_return_status_id', '2', 0),
-(69, 0, 'config', 'config_logo', 'catalog/opencart-logo.png', 0),
-(70, 0, 'config', 'config_icon', 'catalog/opencart.ico', 0),
-(71, 0, 'config', 'config_image_default_width', '300', 0),
-(72, 0, 'config', 'config_image_default_height', '300', 0),
-(73, 0, 'config', 'config_image_thumb_width', '500', 0),
-(74, 0, 'config', 'config_image_thumb_height', '500', 0),
-(75, 0, 'config', 'config_image_popup_width', '800', 0),
-(76, 0, 'config', 'config_image_popup_height', '800', 0),
-(77, 0, 'config', 'config_image_category_width', '300', 0),
-(78, 0, 'config', 'config_image_category_height', '300', 0),
-(79, 0, 'config', 'config_image_article_width', '1140', 0),
-(80, 0, 'config', 'config_image_article_height', '380', 0),
-(81, 0, 'config', 'config_image_topic_width', '1140', 0),
-(82, 0, 'config', 'config_image_topic_height', '380', 0),
-(83, 0, 'config', 'config_image_product_width', '250', 0),
-(84, 0, 'config', 'config_image_product_height', '250', 0),
-(85, 0, 'config', 'config_image_additional_width', '74', 0),
-(86, 0, 'config', 'config_image_additional_height', '74', 0),
-(87, 0, 'config', 'config_image_related_width', '250', 0),
-(88, 0, 'config', 'config_image_related_height', '250', 0),
-(89, 0, 'config', 'config_image_compare_width', '90', 0),
-(90, 0, 'config', 'config_image_compare_height', '90', 0),
-(91, 0, 'config', 'config_image_wishlist_width', '47', 0),
-(92, 0, 'config', 'config_image_wishlist_height', '47', 0),
-(93, 0, 'config', 'config_image_cart_height', '47', 0),
-(94, 0, 'config', 'config_image_cart_width', '47', 0),
-(95, 0, 'config', 'config_image_location_height', '268', 0),
-(96, 0, 'config', 'config_image_location_width', '268', 0),
-(97, 0, 'config', 'config_open', '', 0),
-(98, 0, 'config', 'config_image', '', 0),
-(99, 0, 'config', 'config_fax', '', 0),
-(100, 0, 'config', 'config_telephone', '123456789', 0),
-(101, 0, 'config', 'config_email', 'admin@mail.ru', 0),
-(102, 0, 'config', 'config_geocode', '', 0),
-(103, 0, 'config', 'config_owner', 'Your Name', 0),
-(104, 0, 'config', 'config_address', 'Address 1', 0),
-(105, 0, 'config', 'config_name', 'Your Store', 0),
-(106, 0, 'config', 'config_seo_url', '1', 0),
-(107, 0, 'config', 'config_file_max_size', '20', 0),
-(108, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\nwebp\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nmp4\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
-(109, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/webp\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\napplication/x-zip\r\napplication/x-zip-compressed\r\napplication/rar\r\napplication/x-rar\r\napplication/x-rar-compressed\r\napplication/octet-stream\r\naudio/mpeg\r\nvideo/mp4\r\nvideo/quicktime\r\napplication/pdf', 0),
-(110, 0, 'config', 'config_maintenance', '0', 0),
-(111, 0, 'config', 'config_encryption', '', 0),
-(112, 0, 'config', 'config_compression', '0', 0),
-(113, 0, 'config', 'config_error_display', '1', 0),
-(114, 0, 'config', 'config_error_log', '1', 0),
-(115, 0, 'config', 'config_error_filename', 'error.log', 0),
-(116, 0, 'config', 'config_mail_engine', '', 0),
-(117, 0, 'config', 'config_mail_parameter', '', 0),
-(118, 0, 'config', 'config_mail_smtp_hostname', '', 0),
-(119, 0, 'config', 'config_mail_smtp_username', '', 0),
-(120, 0, 'config', 'config_mail_smtp_password', '', 0),
-(121, 0, 'config', 'config_mail_smtp_port', '25', 0),
-(122, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
-(123, 0, 'config', 'config_mail_alert_email', '', 0),
-(124, 0, 'config', 'config_mail_alert', '[\"order\"]', 1),
-(125, 0, 'config', 'config_captcha', 'basic', 0),
-(126, 0, 'config', 'config_captcha_page', '[\"review\",\"return\",\"contact\"]', 1),
-(127, 0, 'config', 'config_2fa_expire', '90', 0),
-(128, 0, 'config', 'config_login_attempts', '5', 0),
-(129, 0, 'config', 'config_password_length', '6', 0),
 (130, 0, 'currency_ecb', 'currency_ecb_status', '1', 0),
 (131, 0, 'dashboard_activity', 'dashboard_activity_status', '1', 0),
 (132, 0, 'dashboard_activity', 'dashboard_activity_sort_order', '7', 0),
@@ -4940,8 +4852,155 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (215, 0, 'total_shipping', 'total_shipping_estimator', '1', 0),
 (216, 0, 'total_coupon', 'total_coupon_sort_order', '4', 0),
 (217, 0, 'total_coupon', 'total_coupon_status', '1', 0),
-(218, 0, 'config', 'config_api_id', '1', 0),
-(219, 0, 'config', 'config_affiliate_expire', '3600000000', 0);
+(220, 0, 'config', 'config_name', 'Your Store', 0),
+(221, 0, 'config', 'config_theme', 'basic', 0),
+(222, 0, 'config', 'config_layout_id', '4', 0),
+(223, 0, 'config', 'config_logo', 'catalog/opencart-logo.png', 0),
+(224, 0, 'config', 'config_icon', 'catalog/opencart.ico', 0),
+(225, 0, 'config', 'config_description', '{\"4\":{\"meta_title\":\"Opencart\",\"meta_description\":\"\",\"meta_keyword\":\"\"},\"1\":{\"meta_title\":\"Opencart\",\"meta_description\":\"\",\"meta_keyword\":\"\"}}', 1),
+(226, 0, 'config', 'config_owner', 'Your Name', 0),
+(227, 0, 'config', 'config_address', 'Address 1', 0),
+(228, 0, 'config', 'config_geocode', '', 0),
+(229, 0, 'config', 'config_email', 'admin@mail.ru', 0),
+(230, 0, 'config', 'config_telephone', '050 981 13 14', 0),
+(231, 0, 'config', 'config_image', '', 0),
+(232, 0, 'config', 'config_open', '', 0),
+(233, 0, 'config', 'config_comment', '', 0),
+(234, 0, 'config', 'config_country_id', '222', 0),
+(235, 0, 'config', 'config_zone_id', '3563', 0),
+(236, 0, 'config', 'config_timezone', 'UTC', 0),
+(237, 0, 'config', 'config_language_catalog', 'en-gb', 0),
+(238, 0, 'config', 'config_language_admin', 'en-gb', 0),
+(239, 0, 'config', 'config_currency', 'USD', 0),
+(240, 0, 'config', 'config_currency_engine', 'ecb', 0),
+(241, 0, 'config', 'config_currency_auto', '1', 0),
+(242, 0, 'config', 'config_length_class_id', '1', 0),
+(243, 0, 'config', 'config_weight_class_id', '1', 0),
+(244, 0, 'config', 'config_product_description_length', '100', 0),
+(245, 0, 'config', 'config_pagination', '10', 0),
+(246, 0, 'config', 'config_product_count', '1', 0),
+(247, 0, 'config', 'config_pagination_admin', '10', 0),
+(248, 0, 'config', 'config_autocomplete_limit', '5', 0),
+(249, 0, 'config', 'config_product_report_status', '0', 0),
+(250, 0, 'config', 'config_review_status', '1', 0),
+(251, 0, 'config', 'config_review_purchased', '0', 0),
+(252, 0, 'config', 'config_review_guest', '1', 0),
+(253, 0, 'config', 'config_article_description_length', '600', 0),
+(254, 0, 'config', 'config_comment_status', '0', 0),
+(255, 0, 'config', 'config_comment_approve', '0', 0),
+(256, 0, 'config', 'config_comment_interval', '', 0),
+(257, 0, 'config', 'config_cookie_id', '0', 0),
+(258, 0, 'config', 'config_gdpr_id', '0', 0),
+(259, 0, 'config', 'config_gdpr_limit', '180', 0),
+(260, 0, 'config', 'config_tax', '1', 0),
+(261, 0, 'config', 'config_tax_default', 'shipping', 0),
+(262, 0, 'config', 'config_tax_customer', 'shipping', 0),
+(263, 0, 'config', 'config_customer_online', '0', 0),
+(264, 0, 'config', 'config_customer_online_expire', '1', 0),
+(265, 0, 'config', 'config_customer_activity', '0', 0),
+(266, 0, 'config', 'config_customer_search', '0', 0),
+(267, 0, 'config', 'config_customer_group_id', '1', 0),
+(268, 0, 'config', 'config_customer_group_display', '[\"1\"]', 1),
+(269, 0, 'config', 'config_customer_price', '0', 0),
+(270, 0, 'config', 'config_telephone_display', '0', 0),
+(271, 0, 'config', 'config_telephone_required', '0', 0),
+(272, 0, 'config', 'config_account_id', '3', 0),
+(273, 0, 'config', 'config_2fa', '0', 0),
+(274, 0, 'config', 'config_login_attempts', '5', 0),
+(275, 0, 'config', 'config_password_length', '6', 0),
+(276, 0, 'config', 'config_invoice_prefix', 'INV-2026-00', 0),
+(277, 0, 'config', 'config_cart_weight', '1', 0),
+(278, 0, 'config', 'config_checkout_guest', '1', 0),
+(279, 0, 'config', 'config_checkout_payment_address', '0', 0),
+(280, 0, 'config', 'config_checkout_shipping_address', '0', 0),
+(281, 0, 'config', 'config_checkout_id', '0', 0),
+(282, 0, 'config', 'config_order_status_id', '1', 0),
+(283, 0, 'config', 'config_processing_status', '[\"5\",\"1\",\"2\",\"12\",\"3\"]', 1),
+(284, 0, 'config', 'config_complete_status', '[\"5\",\"3\"]', 1),
+(285, 0, 'config', 'config_failed_status_id', '7', 0),
+(286, 0, 'config', 'config_void_status_id', '16', 0),
+(287, 0, 'config', 'config_fraud_status_id', '8', 0),
+(288, 0, 'config', 'config_api_id', '1', 0),
+(289, 0, 'config', 'config_subscription_status_id', '1', 0),
+(290, 0, 'config', 'config_subscription_active_status_id', '2', 0),
+(291, 0, 'config', 'config_subscription_expired_status_id', '3', 0),
+(292, 0, 'config', 'config_subscription_suspended_status_id', '4', 0),
+(293, 0, 'config', 'config_subscription_canceled_status_id', '5', 0),
+(294, 0, 'config', 'config_subscription_failed_status_id', '6', 0),
+(295, 0, 'config', 'config_subscription_denied_status_id', '7', 0),
+(296, 0, 'config', 'config_stock_display', '0', 0),
+(297, 0, 'config', 'config_stock_warning', '0', 0),
+(298, 0, 'config', 'config_stock_checkout', '0', 0),
+(299, 0, 'config', 'config_stock_status_id', '7', 0),
+(300, 0, 'config', 'config_affiliate_status', '1', 0),
+(301, 0, 'config', 'config_affiliate_group_id', '1', 0),
+(302, 0, 'config', 'config_affiliate_approval', '0', 0),
+(303, 0, 'config', 'config_affiliate_auto', '0', 0),
+(304, 0, 'config', 'config_affiliate_commission', '5', 0),
+(305, 0, 'config', 'config_affiliate_expire', '3600000000', 0),
+(306, 0, 'config', 'config_affiliate_id', '4', 0),
+(307, 0, 'config', 'config_return_status_id', '2', 0),
+(308, 0, 'config', 'config_return_id', '0', 0),
+(309, 0, 'config', 'config_captcha', '', 0),
+(310, 0, 'config', 'config_captcha_page', '[\"review\",\"contact\"]', 1),
+(311, 0, 'config', 'config_image_default_width', '300', 0),
+(312, 0, 'config', 'config_image_default_height', '300', 0),
+(313, 0, 'config', 'config_image_category_width', '300', 0),
+(314, 0, 'config', 'config_image_category_height', '300', 0),
+(315, 0, 'config', 'config_image_thumb_width', '500', 0),
+(316, 0, 'config', 'config_image_thumb_height', '500', 0),
+(317, 0, 'config', 'config_image_popup_width', '800', 0),
+(318, 0, 'config', 'config_image_popup_height', '800', 0),
+(319, 0, 'config', 'config_image_product_width', '250', 0),
+(320, 0, 'config', 'config_image_product_height', '250', 0),
+(321, 0, 'config', 'config_image_additional_width', '74', 0),
+(322, 0, 'config', 'config_image_additional_height', '74', 0),
+(323, 0, 'config', 'config_image_related_width', '250', 0),
+(324, 0, 'config', 'config_image_related_height', '250', 0),
+(325, 0, 'config', 'config_image_article_width', '1140', 0),
+(326, 0, 'config', 'config_image_article_height', '380', 0),
+(327, 0, 'config', 'config_image_topic_width', '1140', 0),
+(328, 0, 'config', 'config_image_topic_height', '380', 0),
+(329, 0, 'config', 'config_image_compare_width', '90', 0),
+(330, 0, 'config', 'config_image_compare_height', '90', 0),
+(331, 0, 'config', 'config_image_wishlist_width', '47', 0),
+(332, 0, 'config', 'config_image_wishlist_height', '47', 0),
+(333, 0, 'config', 'config_image_cart_width', '47', 0),
+(334, 0, 'config', 'config_image_cart_height', '47', 0),
+(335, 0, 'config', 'config_image_location_width', '268', 0),
+(336, 0, 'config', 'config_image_location_height', '268', 0),
+(337, 0, 'config', 'config_mail_engine', '', 0),
+(338, 0, 'config', 'config_mail_parameter', '', 0),
+(339, 0, 'config', 'config_mail_smtp_hostname', '', 0),
+(340, 0, 'config', 'config_mail_smtp_username', '', 0),
+(341, 0, 'config', 'config_mail_smtp_password', '', 0),
+(342, 0, 'config', 'config_mail_smtp_port', '25', 0),
+(343, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
+(344, 0, 'config', 'config_mail_alert', '[\"order\"]', 1),
+(345, 0, 'config', 'config_mail_alert_email', '', 0),
+(346, 0, 'config', 'config_maintenance', '0', 0),
+(347, 0, 'config', 'config_session_expire', '86400', 0),
+(348, 0, 'config', 'config_session_samesite', 'Strict', 0),
+(349, 0, 'config', 'config_seo_url', '1', 0),
+(350, 0, 'config', 'config_compression', '0', 0),
+(351, 0, 'config', 'config_user_2fa', '0', 0),
+(352, 0, 'config', 'config_2fa_expire', '90', 0),
+(353, 0, 'config', 'config_user_password_length', '', 0),
+(354, 0, 'config', 'config_shared', '0', 0),
+(355, 0, 'config', 'config_file_max_size', '20', 0),
+(356, 0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\nwebp\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nmp4\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
+(357, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/webp\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\napplication/x-zip\r\napplication/x-zip-compressed\r\napplication/rar\r\napplication/x-rar\r\napplication/x-rar-compressed\r\napplication/octet-stream\r\naudio/mpeg\r\nvideo/mp4\r\nvideo/quicktime\r\napplication/pdf', 0),
+(358, 0, 'config', 'config_error_display', '1', 0),
+(359, 0, 'config', 'config_error_log', '1', 0),
+(360, 0, 'config', 'config_error_filename', 'error.log', 0),
+(387, 0, 'config_feature', 'config_feature_account', '1', 0),
+(388, 0, 'config_feature', 'config_feature_wishlist', '1', 0),
+(389, 0, 'config_feature', 'config_feature_checkout', '1', 0),
+(390, 0, 'config_feature', 'config_feature_cart', '1', 0),
+(391, 0, 'config_feature', 'config_feature_coupon', '1', 0),
+(392, 0, 'config_feature', 'config_feature_affiliate', '1', 0),
+(393, 0, 'config_feature', 'config_feature_review', '1', 0),
+(394, 0, 'config_feature', 'config_feature_compare', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -19007,7 +19066,7 @@ ALTER TABLE `oc_banner_image`
 -- Tablo için AUTO_INCREMENT değeri `oc_cart`
 --
 ALTER TABLE `oc_cart`
-  MODIFY `cart_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cart_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_category`
@@ -19025,7 +19084,7 @@ ALTER TABLE `oc_country`
 -- Tablo için AUTO_INCREMENT değeri `oc_coupon`
 --
 ALTER TABLE `oc_coupon`
-  MODIFY `coupon_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `coupon_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_coupon_history`
@@ -19055,7 +19114,7 @@ ALTER TABLE `oc_currency`
 -- Tablo için AUTO_INCREMENT değeri `oc_customer`
 --
 ALTER TABLE `oc_customer`
-  MODIFY `customer_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_customer_activity`
@@ -19097,13 +19156,13 @@ ALTER TABLE `oc_customer_history`
 -- Tablo için AUTO_INCREMENT değeri `oc_customer_ip`
 --
 ALTER TABLE `oc_customer_ip`
-  MODIFY `customer_ip_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_ip_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_customer_login`
 --
 ALTER TABLE `oc_customer_login`
-  MODIFY `customer_login_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_login_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_customer_reward`
@@ -19211,7 +19270,7 @@ ALTER TABLE `oc_identifier`
 -- Tablo için AUTO_INCREMENT değeri `oc_information`
 --
 ALTER TABLE `oc_information`
-  MODIFY `information_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `information_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_language`
@@ -19427,13 +19486,13 @@ ALTER TABLE `oc_review`
 -- Tablo için AUTO_INCREMENT değeri `oc_seo_url`
 --
 ALTER TABLE `oc_seo_url`
-  MODIFY `seo_url_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
+  MODIFY `seo_url_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=260;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_setting`
 --
 ALTER TABLE `oc_setting`
-  MODIFY `setting_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `setting_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=395;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `oc_startup`

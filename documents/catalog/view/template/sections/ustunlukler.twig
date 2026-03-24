@@ -7,7 +7,7 @@
 
   {% if items %}
     <div class="row g-4">
-      {% for item in items %}
+      {% for item in items|slice(1) %}
         <div class="col-12 col-sm-6 col-md-3">
           <div class="card h-100 border-0 text-center">
             {% if item.image %}
@@ -29,3 +29,8 @@
     </div>
   {% endif %}
 </section>
+
+{#
+array elementlerini gormek ucun ucun:
+<pre>{{ custom_fields|json_encode }}</pre>
+#}

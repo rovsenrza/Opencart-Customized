@@ -178,6 +178,7 @@ class __TwigTemplate_384d755b093ccc26090b4f0c9447b1ce extends Template
         }
         // line 97
         yield "</section>
+
 ";
         yield from [];
     }
@@ -305,6 +306,10 @@ class __TwigTemplate_384d755b093ccc26090b4f0c9447b1ce extends Template
     </script>
   {% endif %}
 </section>
-", "catalog/view/template/sections/mehsullarimiz.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/mehsullarimiz.twig");
+
+{#
+array elementlerini gormek ucun ucun:
+<pre>{{ custom_fields|json_encode }}</pre>
+#}", "catalog/view/template/sections/mehsullarimiz.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/mehsullarimiz.twig");
     }
 }

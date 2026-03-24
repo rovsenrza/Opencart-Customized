@@ -198,6 +198,19 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
 
+		if (!empty($data['filter_product_ids']) && is_array($data['filter_product_ids'])) {
+			$product_ids = array_map('intval', $data['filter_product_ids']);
+			$product_ids = array_values(array_filter($product_ids, function($product_id) {
+				return $product_id > 0;
+			}));
+
+			if ($product_ids) {
+				$sql .= " AND `p`.`product_id` IN (" . implode(',', $product_ids) . ")";
+			} else {
+				$sql .= " AND 1 = 0";
+			}
+		}
+
 		$sql .= " GROUP BY `p`.`product_id`";
 
 		$sort_data = [
@@ -293,6 +306,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p`.`date_available` <= NOW())";
 		}
 
+		if (!empty($data['filter_search'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
+		}
+
 		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category_id'])) {
@@ -357,13 +374,7 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 
 			if (!empty($data['filter_search'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR `pc`.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
 			}
 
 			$sql .= ")";
@@ -373,9 +384,273 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
 
+		if (!empty($data['filter_product_ids']) && is_array($data['filter_product_ids'])) {
+			$product_ids = array_map('intval', $data['filter_product_ids']);
+			$product_ids = array_values(array_filter($product_ids, function($product_id) {
+				return $product_id > 0;
+			}));
+
+			if ($product_ids) {
+				$sql .= " AND `p`.`product_id` IN (" . implode(',', $product_ids) . ")";
+			} else {
+				$sql .= " AND 1 = 0";
+			}
+		}
+
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get dynamic facet values (attributes + options) for category products.
+	 *
+	 * @param int  $category_id
+	 * @param bool $sub_category
+	 *
+	 * @return array<string, array<int, array<string, mixed>>>
+	 */
+	public function getDynamicFacetsByCategory(int $category_id, bool $sub_category = false): array {
+		$language_id = (int)$this->config->get('config_language_id');
+		$store_id = (int)$this->config->get('config_store_id');
+		$category_join = $sub_category
+			? "LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cp`.`category_id` = `p2c`.`category_id`) AND `cp`.`path_id` = '" . (int)$category_id . "'"
+			: "";
+		$category_where = $sub_category
+			? " AND `cp`.`path_id` = '" . (int)$category_id . "'"
+			: " AND `p2c`.`category_id` = '" . (int)$category_id . "'";
+
+		$attribute_query = $this->db->query("SELECT `p2c`.`product_id`, `pa`.`attribute_id`, `ad`.`name` AS `attribute_name`, TRIM(`pa`.`text`) AS `facet_value` FROM `" . DB_PREFIX . "product_to_category` `p2c` " . $category_join . " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2c`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id` AND `p2s`.`store_id` = '" . $store_id . "') LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`pd`.`product_id` = `p2c`.`product_id` AND `pd`.`language_id` = '" . $language_id . "') LEFT JOIN `" . DB_PREFIX . "product_attribute` `pa` ON (`pa`.`product_id` = `p2c`.`product_id` AND `pa`.`language_id` = '" . $language_id . "') LEFT JOIN `" . DB_PREFIX . "attribute_description` `ad` ON (`ad`.`attribute_id` = `pa`.`attribute_id` AND `ad`.`language_id` = '" . $language_id . "') WHERE `p`.`product_id` IS NOT NULL AND `p2s`.`product_id` IS NOT NULL AND `pd`.`product_id` IS NOT NULL" . $category_where . " AND `pa`.`attribute_id` IS NOT NULL");
+
+		$option_query = $this->db->query("SELECT `p2c`.`product_id`, `po`.`option_id`, `od`.`name` AS `option_name`, TRIM(`ovd`.`name`) AS `facet_value` FROM `" . DB_PREFIX . "product_to_category` `p2c` " . $category_join . " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2c`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id` AND `p2s`.`store_id` = '" . $store_id . "') LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`pd`.`product_id` = `p2c`.`product_id` AND `pd`.`language_id` = '" . $language_id . "') LEFT JOIN `" . DB_PREFIX . "product_option` `po` ON (`po`.`product_id` = `p2c`.`product_id`) LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`od`.`option_id` = `po`.`option_id` AND `od`.`language_id` = '" . $language_id . "') LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_id` = `po`.`product_option_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ovd`.`option_value_id` = `pov`.`option_value_id` AND `ovd`.`language_id` = '" . $language_id . "') WHERE `p`.`product_id` IS NOT NULL AND `p2s`.`product_id` IS NOT NULL AND `pd`.`product_id` IS NOT NULL" . $category_where . " AND `po`.`option_id` IS NOT NULL AND `ovd`.`name` IS NOT NULL");
+
+		$attribute_map = [];
+		$option_map = [];
+
+		foreach ($attribute_query->rows as $row) {
+			$attribute_id = (int)$row['attribute_id'];
+			$value = trim((string)$row['facet_value']);
+			$product_id = (int)$row['product_id'];
+
+			if ($attribute_id <= 0 || $value === '') {
+				continue;
+			}
+
+			if (!isset($attribute_map[$attribute_id])) {
+				$attribute_map[$attribute_id] = [
+					'id' => $attribute_id,
+					'name' => (string)$row['attribute_name'],
+					'values' => []
+				];
+			}
+
+			$value_key = oc_strtolower($value);
+
+			if (!isset($attribute_map[$attribute_id]['values'][$value_key])) {
+				$attribute_map[$attribute_id]['values'][$value_key] = [
+					'value' => $value,
+					'label' => $value,
+					'product_ids' => []
+				];
+			}
+
+			$attribute_map[$attribute_id]['values'][$value_key]['product_ids'][$product_id] = true;
+		}
+
+		foreach ($option_query->rows as $row) {
+			$option_id = (int)$row['option_id'];
+			$value = trim((string)$row['facet_value']);
+			$product_id = (int)$row['product_id'];
+
+			if ($option_id <= 0 || $value === '') {
+				continue;
+			}
+
+			if (!isset($option_map[$option_id])) {
+				$option_map[$option_id] = [
+					'id' => $option_id,
+					'name' => (string)$row['option_name'],
+					'values' => []
+				];
+			}
+
+			$value_key = oc_strtolower($value);
+
+			if (!isset($option_map[$option_id]['values'][$value_key])) {
+				$option_map[$option_id]['values'][$value_key] = [
+					'value' => $value,
+					'label' => $value,
+					'product_ids' => []
+				];
+			}
+
+			$option_map[$option_id]['values'][$value_key]['product_ids'][$product_id] = true;
+		}
+
+		$attributes = [];
+		$options = [];
+
+		foreach ($attribute_map as $attribute) {
+			$values = [];
+
+			foreach ($attribute['values'] as $value) {
+				$values[] = [
+					'value' => $value['value'],
+					'label' => $value['label'],
+					'total' => count($value['product_ids'])
+				];
+			}
+
+			usort($values, function($a, $b) {
+				return strcmp((string)$a['label'], (string)$b['label']);
+			});
+
+			if ($values) {
+				$attributes[] = [
+					'id' => $attribute['id'],
+					'name' => $attribute['name'],
+					'values' => $values
+				];
+			}
+		}
+
+		foreach ($option_map as $option) {
+			$values = [];
+
+			foreach ($option['values'] as $value) {
+				$values[] = [
+					'value' => $value['value'],
+					'label' => $value['label'],
+					'total' => count($value['product_ids'])
+				];
+			}
+
+			usort($values, function($a, $b) {
+				return strcmp((string)$a['label'], (string)$b['label']);
+			});
+
+			if ($values) {
+				$options[] = [
+					'id' => $option['id'],
+					'name' => $option['name'],
+					'values' => $values
+				];
+			}
+		}
+
+		usort($attributes, function($a, $b) {
+			return strcmp((string)$a['name'], (string)$b['name']);
+		});
+
+		usort($options, function($a, $b) {
+			return strcmp((string)$a['name'], (string)$b['name']);
+		});
+
+		return [
+			'attributes' => $attributes,
+			'options' => $options
+		];
+	}
+
+	/**
+	 * Get product IDs that match dynamic attribute/option filters inside category.
+	 *
+	 * @param int                                $category_id
+	 * @param array<int, array<int, string>>     $attribute_filters
+	 * @param array<int, array<int, string>>     $option_filters
+	 * @param bool                               $sub_category
+	 *
+	 * @return array<int, int>
+	 */
+	public function getFilteredProductIdsByDynamicFacets(int $category_id, array $attribute_filters, array $option_filters, bool $sub_category = false): array {
+		$language_id = (int)$this->config->get('config_language_id');
+		$store_id = (int)$this->config->get('config_store_id');
+		$category_join = $sub_category
+			? "LEFT JOIN `" . DB_PREFIX . "category_path` `cp` ON (`cp`.`category_id` = `p2c`.`category_id`) AND `cp`.`path_id` = '" . (int)$category_id . "'"
+			: "";
+		$category_where = $sub_category
+			? " AND `cp`.`path_id` = '" . (int)$category_id . "'"
+			: " AND `p2c`.`category_id` = '" . (int)$category_id . "'";
+
+		$base_query = $this->db->query("SELECT DISTINCT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` " . $category_join . " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2c`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id` AND `p2s`.`store_id` = '" . $store_id . "') LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`pd`.`product_id` = `p2c`.`product_id` AND `pd`.`language_id` = '" . $language_id . "') WHERE `p`.`product_id` IS NOT NULL AND `p2s`.`product_id` IS NOT NULL AND `pd`.`product_id` IS NOT NULL" . $category_where);
+
+		$matched_ids = [];
+
+		foreach ($base_query->rows as $row) {
+			$product_id = (int)$row['product_id'];
+
+			if ($product_id > 0) {
+				$matched_ids[$product_id] = true;
+			}
+		}
+
+		if (!$matched_ids) {
+			return [];
+		}
+
+		foreach ($attribute_filters as $attribute_id => $values) {
+			$attribute_id = (int)$attribute_id;
+			$values = array_values(array_filter(array_map('trim', $values), function($value) {
+				return $value !== '';
+			}));
+
+			if ($attribute_id <= 0 || !$values) {
+				continue;
+			}
+
+			$escaped_values = [];
+
+			foreach ($values as $value) {
+				$escaped_values[] = "'" . $this->db->escape(oc_strtolower($value)) . "'";
+			}
+
+			$query = $this->db->query("SELECT DISTINCT `pa`.`product_id` FROM `" . DB_PREFIX . "product_attribute` `pa` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pa`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `pa`.`product_id` AND `p2s`.`store_id` = '" . $store_id . "') LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`pd`.`product_id` = `pa`.`product_id` AND `pd`.`language_id` = '" . $language_id . "') LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`product_id` = `pa`.`product_id`) " . $category_join . " WHERE `pa`.`attribute_id` = '" . $attribute_id . "' AND `pa`.`language_id` = '" . $language_id . "' AND `p`.`product_id` IS NOT NULL AND `p2s`.`product_id` IS NOT NULL AND `pd`.`product_id` IS NOT NULL AND LCASE(TRIM(`pa`.`text`)) IN (" . implode(',', $escaped_values) . ")" . $category_where);
+
+			$step_ids = [];
+
+			foreach ($query->rows as $row) {
+				$step_ids[(int)$row['product_id']] = true;
+			}
+
+			$matched_ids = array_intersect_key($matched_ids, $step_ids);
+
+			if (!$matched_ids) {
+				return [];
+			}
+		}
+
+		foreach ($option_filters as $option_id => $values) {
+			$option_id = (int)$option_id;
+			$values = array_values(array_filter(array_map('trim', $values), function($value) {
+				return $value !== '';
+			}));
+
+			if ($option_id <= 0 || !$values) {
+				continue;
+			}
+
+			$escaped_values = [];
+
+			foreach ($values as $value) {
+				$escaped_values[] = "'" . $this->db->escape(oc_strtolower($value)) . "'";
+			}
+
+			$query = $this->db->query("SELECT DISTINCT `po`.`product_id` FROM `" . DB_PREFIX . "product_option` `po` LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_id` = `po`.`product_option_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ovd`.`option_value_id` = `pov`.`option_value_id` AND `ovd`.`language_id` = '" . $language_id . "') LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `po`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `po`.`product_id` AND `p2s`.`store_id` = '" . $store_id . "') LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`pd`.`product_id` = `po`.`product_id` AND `pd`.`language_id` = '" . $language_id . "') LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`product_id` = `po`.`product_id`) " . $category_join . " WHERE `po`.`option_id` = '" . $option_id . "' AND `p`.`product_id` IS NOT NULL AND `p2s`.`product_id` IS NOT NULL AND `pd`.`product_id` IS NOT NULL AND LCASE(TRIM(`ovd`.`name`)) IN (" . implode(',', $escaped_values) . ")" . $category_where);
+
+			$step_ids = [];
+
+			foreach ($query->rows as $row) {
+				$step_ids[(int)$row['product_id']] = true;
+			}
+
+			$matched_ids = array_intersect_key($matched_ids, $step_ids);
+
+			if (!$matched_ids) {
+				return [];
+			}
+		}
+
+		return array_map('intval', array_keys($matched_ids));
 	}
 
 	/**

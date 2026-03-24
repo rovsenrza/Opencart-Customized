@@ -192,7 +192,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			}
 
 			// Register the cookie for security.
-			if ($redirect && str_starts_with($redirect, HTTP_SERVER)) {
+			$http_server = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
+
+			if ($redirect && str_starts_with($redirect, $http_server)) {
 				$json['redirect'] = $redirect . '&customer_token=' . $this->session->data['customer_token'];
 			} else {
 				$json['redirect'] = $this->url->link('account/account', 'customer_token=' . $this->session->data['customer_token'], true);

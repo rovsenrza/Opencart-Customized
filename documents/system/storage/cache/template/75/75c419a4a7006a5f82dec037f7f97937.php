@@ -129,6 +129,7 @@ class __TwigTemplate_53baa1c359af848386ca5088272c2fef extends Template
         }
         // line 33
         yield "</section>
+
 ";
         yield from [];
     }
@@ -192,6 +193,10 @@ class __TwigTemplate_53baa1c359af848386ca5088272c2fef extends Template
     </div>
   {% endif %}
 </section>
-", "catalog/view/template/sections/cta.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/cta.twig");
+
+{#
+array elementlerini gormek ucun ucun:
+<pre>{{ custom_fields|json_encode }}</pre>
+#}", "catalog/view/template/sections/cta.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/cta.twig");
     }
 }

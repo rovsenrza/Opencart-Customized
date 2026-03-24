@@ -59,7 +59,7 @@ class __TwigTemplate_5c358b81af78b7a41eeb484fa7e243b4 extends Template
       ";
             // line 10
             $context['_parent'] = $context;
-            $context['_seq'] = CoreExtension::ensureTraversable(($context["items"] ?? null));
+            $context['_seq'] = CoreExtension::ensureTraversable(Twig\Extension\CoreExtension::slice($this->env->getCharset(), ($context["items"] ?? null), 1));
             foreach ($context['_seq'] as $context["_key"] => $context["item"]) {
                 // line 11
                 yield "        <div class=\"col-12 col-sm-6 col-md-3\">
@@ -113,6 +113,7 @@ class __TwigTemplate_5c358b81af78b7a41eeb484fa7e243b4 extends Template
         }
         // line 31
         yield "</section>
+
 ";
         yield from [];
     }
@@ -152,7 +153,7 @@ class __TwigTemplate_5c358b81af78b7a41eeb484fa7e243b4 extends Template
 
   {% if items %}
     <div class=\"row g-4\">
-      {% for item in items %}
+      {% for item in items|slice(1) %}
         <div class=\"col-12 col-sm-6 col-md-3\">
           <div class=\"card h-100 border-0 text-center\">
             {% if item.image %}
@@ -174,6 +175,10 @@ class __TwigTemplate_5c358b81af78b7a41eeb484fa7e243b4 extends Template
     </div>
   {% endif %}
 </section>
-", "catalog/view/template/sections/ustunlukler.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/ustunlukler.twig");
+
+{#
+array elementlerini gormek ucun ucun:
+<pre>{{ custom_fields|json_encode }}</pre>
+#}", "catalog/view/template/sections/ustunlukler.twig", "/Applications/MAMP/htdocs/catalog/view/template/sections/ustunlukler.twig");
     }
 }

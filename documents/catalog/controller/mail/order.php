@@ -89,7 +89,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		if (!defined('HTTP_CATALOG')) {
-			$store_url = HTTP_SERVER;
+			$store_url = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
 		} else {
 			$store_url = HTTP_CATALOG;
 		}
@@ -376,7 +376,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		if (!defined('HTTP_CATALOG')) {
-			$store_url = HTTP_SERVER;
+			$store_url = defined('HTTP_SERVER') ? (string)HTTP_SERVER : (string)$this->config->get('config_url');
 		} else {
 			$store_url = HTTP_CATALOG;
 		}
