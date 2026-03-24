@@ -317,6 +317,21 @@ body.oc-admin .form-text {
     font-size: 0.82rem;
 }
 
+/* Keep autocomplete dropdowns visible inside cards/fieldsets */
+body.oc-admin ul.dropdown-menu[id^='autocomplete-'] {
+    width: 100%;
+    max-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body.oc-admin ul.dropdown-menu[id^='autocomplete-'].show {
+    position: relative;
+    inset: auto;
+    transform: none !important;
+    margin-top: 0.25rem;
+}
+
 body.oc-admin .invalid-feedback {
     font-size: 0.81rem;
 }

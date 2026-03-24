@@ -359,7 +359,7 @@ class __TwigTemplate_e256632bb5c0eb78bac5e53288c272b3 extends Template
         <div class=\"mb-3\">{{ description }}</div>
       {% endif %}
       <hr/>
-      <h3>{{ text_refine }}</h3>
+      
       <div class=\"input-group dropdown mb-3\">
         <input type=\"text\" name=\"search\" value=\"{{ search }}\" placeholder=\"{{ entry_search }}\" id=\"input-search\" class=\"form-control\"/>
         {% if topics %}

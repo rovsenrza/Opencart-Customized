@@ -407,7 +407,7 @@ class __TwigTemplate_1f5dea48c9cb69e2652dd8652ccd5bb2 extends Template
       {% endif %}
 
       {% if categories %}
-        <h3>{{ text_refine }}</h3>
+        
         {% if categories|length <= 5 %}
           <div class=\"row\">
             <div class=\"col-sm-3\">
