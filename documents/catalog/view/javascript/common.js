@@ -79,6 +79,16 @@ window.ocGuestWishlistSet = function(ids) {
     return cleaned;
 };
 
+window.ocGuestWishlistClear = function() {
+    try {
+        localStorage.removeItem(OC_GUEST_WISHLIST_KEY);
+    } catch (error) {
+        return [];
+    }
+
+    return [];
+};
+
 window.ocGuestWishlistAdd = function(product_id) {
     var ids = window.ocGuestWishlistGet();
 
@@ -155,7 +165,9 @@ $(document).ready(function() {
         window.ocInitFrontendAlertSystem();
     }
 
-    if (typeof window.ocGuestWishlistSyncTotal === 'function') {
+    if (window.ocCustomerLogged && typeof window.ocGuestWishlistClear === 'function') {
+        window.ocGuestWishlistClear();
+    } else if (typeof window.ocGuestWishlistSyncTotal === 'function') {
         window.ocGuestWishlistSyncTotal();
     }
 });
@@ -433,6 +445,7 @@ $(document).on('submit', 'form', function (e) {
         var request_url = action.replaceAll('&amp;', '&');
         var is_cart_add = request_url.indexOf('route=checkout/cart.add') !== -1;
         var is_wishlist_add = request_url.indexOf('route=account/wishlist.add') !== -1;
+        var is_login = request_url.indexOf('route=account/login.login') !== -1;
 
         if (is_wishlist_add && !window.ocCustomerLogged) {
             var product_id = parseInt($(form).find('input[name=\'product_id\']').first().val(), 10);
@@ -455,6 +468,14 @@ $(document).on('submit', 'form', function (e) {
                 if (typeof window.ocShowFrontendAlert === 'function') {
                     window.ocShowFrontendAlert('success', message, 4200, 'Wishlist');
                 }
+
+                // Keep server-side guest session wishlist in sync with localStorage.
+                $.ajax({
+                    url: request_url,
+                    type: method,
+                    data: $(form).serialize(),
+                    dataType: 'json'
+                });
             } else if (typeof window.ocShowFrontendAlert === 'function') {
                 window.ocShowFrontendAlert('danger', 'Unable to add this product to wishlist.', 4200, 'Wishlist');
             }
@@ -485,6 +506,10 @@ $(document).on('submit', 'form', function (e) {
                 $(element).find('.invalid-feedback').removeClass('d-block');
 
                 if (json['redirect']) {
+                    if (is_login && typeof window.ocGuestWishlistClear === 'function') {
+                        window.ocGuestWishlistClear();
+                    }
+
                     if (!is_cart_add) {
                         location = json['redirect'];
                     }

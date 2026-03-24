@@ -15,7 +15,7 @@
 </div>
 <script type="text/javascript"><!--
 var $wishlist = $('#wishlist');
-var guestMode = $wishlist.data('guest') == 1;
+var guestMode = String($wishlist.attr('data-guest')) === '1';
 
 function loadGuestWishlist() {
     if (!guestMode) {
@@ -32,7 +32,7 @@ function loadGuestWishlist() {
         url: $wishlist.data('guestList'),
         type: 'post',
         data: {
-            product_ids: ids
+            product_ids: JSON.stringify(ids)
         },
         success: function(html) {
             $wishlist.html(html);

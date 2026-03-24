@@ -220,6 +220,10 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 		$product_ids = $this->sanitizeProductIds($product_ids);
 
+		if (!$product_ids && isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+			$product_ids = $this->sanitizeProductIds($this->session->data['wishlist']);
+		}
+
 		if (!$product_ids) {
 			return $this->load->view('account/wishlist_list', $data);
 		}
